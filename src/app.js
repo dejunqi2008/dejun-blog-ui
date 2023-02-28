@@ -3,11 +3,12 @@ import './app.css';
 
 
 class App extends Component {
-  render() {
-    return (
-      <div id="title">my-project!!!!!</div>
-    );
-  }
+    render() {
+        console.log('hello')
+        return (
+            <div id="title">my-project!!!!!</div>
+        );
+    }
 }
 
 export default App;

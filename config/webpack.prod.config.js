@@ -4,31 +4,37 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
     module: {
-        rules: [
-          {
+        rules: [{
             test: /\.css$/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader'],
-          },
-        ],
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader' ],
+        }],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'public/index.html',
             filename: 'index.html',
             inject: 'body',
-            minify: {
-                removeComments: true,
-            }
+            minify: { removeComments: true }
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({ filename: 'style/[name].[chunkhash:6].css' }),
     ],
     optimization: {
         minimize: true,
-        minimizer: [new CssMinimizerPlugin()],
+        minimizer: [
+            new CssMinimizerPlugin(), // compress css file on prod env
+            new TerserPlugin({ // compress js file on prod env
+                terserOptions: {
+                  compress: {
+                    drop_console: true, // 屏蔽log
+                  },
+                },
+            }),
+        ],
     },
 });

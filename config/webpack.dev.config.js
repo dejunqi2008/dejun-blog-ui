@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
     static: path.join(__dirname, '../dist'),
     port: 9000,
@@ -22,7 +23,8 @@ module.exports = merge(common, {
         test: /\.css$/,
         use: [
             'style-loader',
-            'css-loader'
+            'css-loader',
+            'postcss-loader',
         ]
     }]
   }

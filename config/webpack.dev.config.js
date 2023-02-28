@@ -17,4 +17,13 @@ module.exports = merge(common, {
       hash: false,
     }),
   ],
+  module: {
+    rules: [{
+        test: '/\.css$/',
+        use: [
+            'style-loader', // 
+            'css-loader' // convert css to common js module
+        ]
+    }]
+  }
 });

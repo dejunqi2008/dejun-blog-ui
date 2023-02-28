@@ -18,11 +18,11 @@ module.exports = merge(common, {
     }),
   ],
   module: {
-    rules: [{
-        test: '/\.css$/',
+    rules: [{        
+        test: /\.css$/,
         use: [
-            'style-loader', // 
-            'css-loader' // convert css to common js module
+            'style-loader',
+            'css-loader'
         ]
     }]
   }

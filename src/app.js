@@ -1,2 +1,11 @@
-let root =document.getElementById('root');
-root.innerHTML = 'my-es6-project!!!!!';
+import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    return (
+      <div>my-project!!!!!</div>
+    );
+  }
+}
+
+export default App;

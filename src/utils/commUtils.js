@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 
 
 const getBaseAPIUrl = () => {
@@ -7,3 +8,5 @@ const getBaseAPIUrl = () => {
 }
 
 export const baseAPIUrl = getBaseAPIUrl();
+
+export const getFormatDate = (num) => moment(num).format('LL');

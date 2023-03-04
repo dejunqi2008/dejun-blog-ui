@@ -13,7 +13,6 @@ export const BlogList = ({blogPosts, setBlogPosts }) => {
         const getPost = async () => {
             try {
                 const res = await axios.get(baseAPIUrl + '/blog/list');
-                console.log(res);
                 const { status, data } = res;
                 if (status === 200) {
                     setBlogPosts(data.data);

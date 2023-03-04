@@ -1,0 +1,18 @@
+
+.title-wrapper {
+    padding: 15px 0;
+    border-top: 1px solid #ccc;
+}
+.title-wrapper .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.title-wrapper .info-wrapper span,
+.title-wrapper .info-wrapper a {
+    font-size: 14px;
+    color: #999;
+}
+
+.content {
+    margin-top: 1rem !important;
+}

@@ -24,7 +24,7 @@ export const BlogList = ({blogPosts, setBlogPosts }) => {
         if (blogPosts.length === 0) {
             getPost();
         }
-    })
+    }, [])
 
 
     return <div className="blog-post">

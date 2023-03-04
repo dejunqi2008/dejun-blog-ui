@@ -2,7 +2,11 @@
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
+// var NODE_ENV_BEFORE = process.env.CUSTOM_NODE_ENV || process.env.NODE_ENV;
+// console.log('before setting: ', process.env.CUSTOM_NODE_ENV);
 process.env.NODE_ENV = 'development';
+
+
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -35,6 +39,9 @@ const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+
+console.log('client env: ', env);
+
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 

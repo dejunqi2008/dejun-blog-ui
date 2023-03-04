@@ -3,6 +3,7 @@ import axios from "../../node_modules/axios/index";
 import { baseAPIUrl } from "../utils/commUtils";
 import { ListPanel } from "./list-panel";
 import './bloglist.css'
+import { SearchPanel } from "./search-panel";
 
 
 export const BlogList = ({blogPosts, setBlogPosts }) => {
@@ -28,6 +29,7 @@ export const BlogList = ({blogPosts, setBlogPosts }) => {
 
 
     return <div className="blog-post">
+        <SearchPanel />
         <ListPanel blogListData={blogPosts} error={error} />
     </div>;
 }

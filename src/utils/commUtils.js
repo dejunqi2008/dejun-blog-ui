@@ -7,11 +7,11 @@ const getBaseAPIUrl = () => {
     // const isDevEnv = process.env.NODE_ENV === 'development';
     // return  isDevEnv ? 'http://localhost:8000/api': 'https://dejun-blog-server.herokuapp.com/api';
 
-    // if (process.env) {
-    //     console.log(process.env);
-    // } else {
-    //     console.log(process);
-    // }
+    if (process.env) {
+        console.log(process.env);
+    } else {
+        console.log(process);
+    }
 
     return 'https://dejun-blog-server.herokuapp.com/api';
 }

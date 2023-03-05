@@ -40,7 +40,7 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-console.log('client env: ', env, NODE_ENV_BEFORE);
+console.log('client env: ', env);
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;

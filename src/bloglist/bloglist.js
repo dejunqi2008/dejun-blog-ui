@@ -8,7 +8,6 @@ import { SearchPanel } from "./search-panel";
 
 export const BlogList = ({blogPosts, setBlogPosts }) => {
     const [error, setError] = useState(null);
-    
     useEffect(() => {
         const getPost = async () => {
             try {
@@ -24,6 +23,7 @@ export const BlogList = ({blogPosts, setBlogPosts }) => {
         if (blogPosts.length === 0) {
             getPost();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

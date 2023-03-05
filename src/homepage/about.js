@@ -10,7 +10,7 @@ export const UserIntro = () => {
             <Grid container spacing={1}>
                 <Grid item xs={4}>
                     <section className="profile">
-                        <Avatar alt="Dejun Qi" src="https://previews.dropbox.com/p/thumb/AB3INiSiq1RG1P4fCF4KOSHgekKLaFSjjYZqgA8jVlvouXJMJk8raBgXixN8sbWg1F5PZFqXv42S6gdysiXVIGsRXU4ERW9jH2j17sf_1XBSbnxE4mFyh2qAKvk-Fd5VY4HFfwgcQPDoNDv1tNR8t5rfpFD6jQm5AOlQ2CgRIVusCJQ5245dMZqANidynJo1LgffIwDNCJGP45Sz0JvJ4A59faPQVagV2iicBSfEFztKanI388OnlUiTAHWL73BWnvWLBhVfd4bvccthPs8ex5t3vHEvBo2yTCuXOV9yipoYQDBmqQNeDsHlnoyFgDl8jETx8_4O27IL2wWFuo3EqqvVouu1MDXniusSfTVBnLUqvEXxoRl0DnFB0BLcQxZIaJk/p.jpeg" sx={{ width: 150, height: 150 }} />
+                        <Avatar alt="Dejun Qi" src="https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/temp-dev/public/profile.jpeg" sx={{ width: 150, height: 150 }} />
                     </section>
 
                     <Grid container spacing={2} wrap="wrap">

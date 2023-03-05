@@ -15,6 +15,18 @@
 }
 
 .profile {
-    margin-left: 25%;
+    /* margin-left: 25%; */
     margin-bottom: 2rem !important;
+}
+
+
+.blogposts-pannel {
+    padding-top: 0.3rem !important;
+}
+
+.login-btn {
+    position: absolute !important;
+    top: 0.4rem;
+    right: 1.5rem;
+    z-index:10;
 }

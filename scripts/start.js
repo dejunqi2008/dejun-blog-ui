@@ -2,8 +2,8 @@
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
-var NODE_ENV_BEFORE = process.env.NODE_ENV;
-console.log('before setting: ', process.env.NODE_ENV);
+var NODE_ENV_BEFORE = process.env.CUSTOM_NODE_ENV || process.env.NODE_ENV;
+console.log('before setting: ', process.env.CUSTOM_NODE_ENV);
 process.env.NODE_ENV = 'development';
 
 

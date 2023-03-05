@@ -4,7 +4,7 @@
 process.env.BABEL_ENV = 'development';
 var NODE_ENV_BEFORE = process.env.CUSTOM_NODE_ENV || process.env.NODE_ENV;
 console.log('before setting: ', process.env.CUSTOM_NODE_ENV);
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = process.env.CUSTOM_NODE_ENV || 'development';
 
 
 

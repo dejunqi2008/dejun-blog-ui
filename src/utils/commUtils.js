@@ -9,6 +9,7 @@ const getBaseAPIUrl = () => {
 
     if (process.env) {
         console.log(process.env);
+        console.log(process.env.REACT_APP_BASE_URL);
     } else {
         console.log(process);
     }

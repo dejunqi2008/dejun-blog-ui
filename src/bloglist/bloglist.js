@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+
+import { UserContext } from "../userContext/user-context";
 import axios from "../../node_modules/axios/index";
 import { baseAPIUrl } from "../utils/commUtils";
 import { ListPanel } from "./list-panel";
@@ -6,7 +8,10 @@ import './bloglist.css'
 import { SearchPanel } from "./search-panel";
 
 
-export const BlogList = ({blogPosts, setBlogPosts }) => {
+export const BlogList = () => {
+    const context = useContext(UserContext);
+    const { user }  = context
+    const [blogPosts, setBlogPosts] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
         const getPost = async () => {
@@ -23,12 +28,11 @@ export const BlogList = ({blogPosts, setBlogPosts }) => {
         if (blogPosts.length === 0) {
             getPost();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
 
     return <div className="blog-post">
         <SearchPanel />
-        <ListPanel blogListData={blogPosts} error={error} />
+        <ListPanel blogListData={blogPosts} error={error} isLoggedInUser={user.isLoggedInUser} />
     </div>;
 }

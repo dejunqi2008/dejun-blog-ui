@@ -7,6 +7,7 @@ import { CookiesProvider, useCookies } from 'react-cookie';
 import axios from 'axios';
 import { baseAPIUrl } from './utils/commUtils';
 
+
 function App() {
 
     const [user, setUser] = useState({
@@ -15,7 +16,7 @@ function App() {
         isLoggedInUser: false
     });
     const [cookies, setCookie] = useCookies(['accessToken']);
-
+    
     useEffect(() => {
         const accessToken = cookies.accessToken;
         if (!!accessToken) {
@@ -27,7 +28,7 @@ function App() {
                 }
             });
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

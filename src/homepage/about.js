@@ -10,7 +10,7 @@ export const UserIntro = () => {
             <Grid container spacing={1}>
                 <Grid item xs={4}>
                     <section className="profile">
-                        <Avatar alt="Dejun Qi" src="https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/temp-dev/public/profile.jpeg" sx={{ width: 150, height: 150 }} />
+                        <Avatar alt="Dejun Qi" src="https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/mainline/public/profile.jpeg" sx={{ width: 150, height: 150 }} />
                     </section>
 
                     <Grid container spacing={2} wrap="wrap">

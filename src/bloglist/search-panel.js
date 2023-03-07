@@ -8,13 +8,11 @@ export const SearchPanel = () => {
     }
 
     const navigate = useNavigate();
-
-    // https://www.geeksforgeeks.org/how-to-navigate-on-path-by-button-click-in-react-router/
     const handleButtonClick = (event) => {
         return navigate('/blog/create')
     }
 
-    return <div>
+    return <>
         <TextField
             label="Search posts"
             id="search-bar"
@@ -26,5 +24,5 @@ export const SearchPanel = () => {
         <div>
             <Button onClick={handleButtonClick}>Create</Button>
         </div>
-    </div>
+    </>
 }

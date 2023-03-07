@@ -1,0 +1,14 @@
+
+.text-editor {
+    width: 50rem;
+    /* background-color: aqua; */
+    margin: 5rem auto;
+}
+
+.editorClassName {
+    min-height: 20rem;
+}
+
+.submit-btn {
+    float: right;
+}

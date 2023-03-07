@@ -1,8 +1,9 @@
 import moment from "moment/moment";
 import { Typography, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
+import parse from 'html-react-parser';
 
-export const ListPanel = ({blogListData, error}) => {
+export const ListPanel = ({blogListData, error, isLoggedInUser}) => {
 
     const renderPostData = (listData, error) => {
         if (error) {
@@ -21,7 +22,13 @@ export const ListPanel = ({blogListData, error}) => {
                         </span>&nbsp;&nbsp;&nbsp;
                         <span>{moment(createtime).format('LLL')}</span>
                     </div>
-                    <Typography noWrap className="content">{content}</Typography>
+                    <Typography noWrap className="content">{parse(content, {
+                        replace: dom => {
+                            if (dom.name == 'p') {
+                                dom.name = 'span'
+                            }
+                        }
+                    })}</Typography>
                 </div>
             ));
         })

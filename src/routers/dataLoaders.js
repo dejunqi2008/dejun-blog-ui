@@ -11,7 +11,7 @@ export const BlogDetailDataLoader = async ({ params }) => {
         }
     } catch(err) {
         res.error = err;
-    }   
+    }
 
     return res;
 }

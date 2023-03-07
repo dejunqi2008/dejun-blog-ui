@@ -1,6 +1,12 @@
+.blog-detail {
+    width: 50rem;
+    margin: 0 auto;
+}
+
 a {
     text-decoration-line: none;
 }
+
 
 .title {
     font-size: 20px;

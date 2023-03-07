@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useState, useEffect, memo } from "react";
+
+import { UserContext } from "../userContext/user-context";
 import axios from "../../node_modules/axios/index";
 import { baseAPIUrl } from "../utils/commUtils";
-import { ListPanel } from "./list-panel";
+import { ListPanel, MemoListPannel } from "./list-panel";
 import './bloglist.css'
-import { SearchPanel } from "./search-panel";
+import  { SearchPanel }  from "./search-panel";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../utils/hookUtils";
 
+export const BlogList = () => {
 
-export const BlogList = ({blogPosts, setBlogPosts }) => {
+    const { username } = useParams();
+    const [blogPosts, setBlogPosts] = useState([]);
     const [error, setError] = useState(null);
-    useEffect(() => {
-        const getPost = async () => {
-            try {
-                const res = await axios.get(baseAPIUrl + '/blog/list');
-                const { status, data } = res;
-                if (status === 200) {
-                    setBlogPosts(data.data);
-                }
-            } catch (err) {
-                setError(err);
-            }
-        }
-        if (blogPosts.length === 0) {
-            getPost();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const isAuth = useAuth()(username);
 
 
     return <div className="blog-post">
-        <SearchPanel />
-        <ListPanel blogListData={blogPosts} error={error} />
+        <SearchPanel
+            setError={setError}
+            author={username}
+            isAuth={isAuth}
+            setBlogPosts={setBlogPosts} />
+        <MemoListPannel
+            blogListData={blogPosts}
+            error={error}
+            author={username}
+            />
     </div>;
 }

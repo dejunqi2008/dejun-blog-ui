@@ -1,45 +1,86 @@
-import React from "react";
-import { Typography, Box} from "@mui/material";
+import {  Box, Button} from "@mui/material";
 import { Avatar, Grid } from "../../node_modules/@mui/material/index";
 import { SocialIcon } from "react-social-icons";
-import './homepage.css';
+import './about.css';
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import parse from 'html-react-parser';
+
+import { useAuth } from "../utils/hookUtils";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../userContext/user-context";
 
 export const UserIntro = () => {
+
+    const { data: {data } } = useLoaderData();
+    const { username } = useParams();
+    const {
+        realname,
+        introduction,
+        emailaddr,
+        githubaddr,
+        linkedinaddr,
+        profilepic,
+        isadmin
+    } = data;
+
+    console.log(data)
+    const isAuth = useAuth()(username);
+    const navigate = useNavigate();
+
+
+
+    const renderContactInfoSection = () => {
+        const contacts = [];
+        if (emailaddr !== 'null') {
+            contacts.push(<div key="0"><SocialIcon url={`mailto:${emailaddr}`} /></div>);
+        }
+        if (githubaddr !== 'null') {
+            contacts.push(<div key="1"><SocialIcon url={githubaddr} /></div>);
+        }
+        if (linkedinaddr !== 'null') {
+            contacts.push(<div key="2"><SocialIcon url={linkedinaddr} /></div>);
+        }
+        return <section className="contact-info-wrapper">
+            {contacts}
+        </section>
+    };
+
+    const handleBtnClick = () => {
+        return navigate(`/user/edit/${username}`)
+    }
+
+    const renderButtonGroup = () => {
+        if (isAuth) {
+            return (
+                <Button className="intro-btn" variant="outlined" onClick={handleBtnClick}>Edit Profile
+                </Button>
+            );
+        }
+        return null;
+    }
+
+    const getProfilePic = () => {
+        let addr = profilepic || 'https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/mainline/public/default-profile.jpeg';
+        if (isadmin) {
+            addr = 'https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/mainline/public/profile.jpeg';
+        }
+        return addr;
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={1}>
                 <Grid item xs={4}>
                     <section className="profile">
-                        <Avatar alt="Dejun Qi" src="https://raw.githubusercontent.com/dejunqi2008/dejun-blog-ui/temp-dev/public/profile.jpeg" sx={{ width: 150, height: 150 }} />
+                        <Avatar alt={realname} src={getProfilePic()} sx={{ width: 150, height: 150 }} />
                     </section>
-
-                    <Grid container spacing={2} wrap="wrap">
-                        <Grid item xs={4}>
-                            <SocialIcon url="https://www.linkedin.com/in/dejun-qi-132a2865/" />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <SocialIcon url="https://github.com/dejunqi2008" />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <SocialIcon url="mailto:dejunqi2008@gmail.com" />
-                        </Grid>
-                    </Grid>
+                    {renderContactInfoSection()}
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography paragraph={true} variant="body1" gutterBottom={true}>
-                    My name is <i><b>Dejun Qi</b></i> and I am a fullstack software engineer, My primary responsibility is to design, develop, and maintain software applications. I use my expertise in programming languages, software development methodologies, and problem-solving skills to create efficient and effective software solutions. 
-                    </Typography>
-                    <Typography paragraph={true} variant="body1" gutterBottom={true}>
-                    I work closely with PM and designer to understand their needs and requirements and translate them into functional software. I collaborate with other software engineers, project managers, and quality assurance professionals to ensure that the software meets the necessary standards for functionality, reliability, and security.
-                    </Typography>
-                    <Typography variant="body1" gutterBottom={true} paragraph={true}>
-                    As a software engineer, I am also responsible for staying up-to-date with the latest trends and technologies in the field. This involves continuous learning and professional development to keep my skills and knowledge relevant and up-to-date.
-                    </Typography>
-                    <Typography variant="body1" gutterBottom={true} paragraph={true}>
-                    Ultimately, my goal as a software engineer is to use my expertise to create innovative and practical software solutions that improve the lives of people and businesses around the world.
-                    </Typography>
+                    {!!introduction ? parse(introduction) : 'Login and edit your profile'}
                 </Grid>
             </Grid>
+            {renderButtonGroup()}
         </Box>
     );
 }

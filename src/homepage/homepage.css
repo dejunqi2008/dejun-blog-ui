@@ -1,32 +1,5 @@
-
-.indent {
-    margin-left: 2rem !important;
-}
-
-.img {
-    width: 10rem;
-    height: 10rem;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-}
-
-.name {
-    font-weight: bold !important;
-}
-
-.profile {
-    /* margin-left: 25%; */
-    margin-bottom: 2rem !important;
-}
-
-
-.blogposts-pannel {
-    padding-top: 0.3rem !important;
-}
-
-.login-btn {
-    position: absolute !important;
-    top: 0.4rem;
-    right: 1.5rem;
-    z-index:10;
+#home-page {
+    /* background-color: aquamarine; */
+    max-width: 40rem;
+    margin: 0 auto;
 }

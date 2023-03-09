@@ -24,7 +24,7 @@ export const ListPanel = ({blogListData, error, isLoggedInUser}) => {
                     </div>
                     <Typography noWrap className="content">{parse(content, {
                         replace: dom => {
-                            if (dom.name == 'p') {
+                            if (dom.name === 'p') {
                                 dom.name = 'span'
                             }
                         }

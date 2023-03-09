@@ -17,7 +17,7 @@ const style = {
     p: 4,
 };
 
-export const LoginModal = ({modalOpen, setModalOpen}) => {
+export const LoginPage= ({modalOpen, setModalOpen}) => {
 
     const [credential, setCredential] = useState({
         username: '',
@@ -53,35 +53,36 @@ export const LoginModal = ({modalOpen, setModalOpen}) => {
         <Modal
             open={modalOpen}
             onClose={() => setModalOpen(false)}
+
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
-        <Box sx={style}>
-            Login panel
-            <div>
-                <TextField
-                    id="outlined-username"
-                    label="Username"
-                    margin="normal"
-                    required={true}
-                    onChange={(event) => setCredential({
-                        ...credential,
-                        username: event.target.value
-                    })}
-                />
-                <TextField
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                    margin="normal"
-                    required={true}
-                    onChange={(event) => setCredential({
-                        ...credential,
-                        password: event.target.value
-                    })}
-                />
-            </div>
-            <Button onClick={handleLogin}>Submit</Button>
-        </Box>
-    </Modal>
+            <Box sx={style}>
+                Login panel
+                <div>
+                    <TextField
+                        id="outlined-username"
+                        label="Username"
+                        margin="normal"
+                        required={true}
+                        onChange={(event) => setCredential({
+                            ...credential,
+                            username: event.target.value
+                        })}
+                    />
+                    <TextField
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        margin="normal"
+                        required={true}
+                        onChange={(event) => setCredential({
+                            ...credential,
+                            password: event.target.value
+                        })}
+                    />
+                </div>
+                <Button onClick={handleLogin}>Submit</Button>
+            </Box>
+        </Modal>
     )
 }

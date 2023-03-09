@@ -3,7 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { Box, Button, CssBaseline, IconButton, Toolbar } from "@mui/material";
-import { LoginModal } from "../loginpage/loginmodal";
+import { LoginPage } from "../loginpage/loginpage";
 import { UserContext } from "../userContext/user-context";
 import './navbar.css'
 
@@ -27,7 +27,7 @@ export default function NavBar() {
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <LoginModal
+            <LoginPage
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
             />

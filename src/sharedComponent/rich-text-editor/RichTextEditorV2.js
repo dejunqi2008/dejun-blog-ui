@@ -13,13 +13,34 @@ import { useReuqest } from "../../utils/hookUtils";
 export const RichTextEditorV2 = (props) => {
 
     const getEditorState = () => {
+
         const { isEditMode } = props;
+        if (isEditMode) {
+            const {blog: { content }} = props;
+            const html = content;
+            const contentBlock = htmlToDraft(html);
+            if (contentBlock) {
+                const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                return EditorState.createWithContent(contentState);
+            }
+        }
+
+        return EditorState.createEmpty();
+    }
+
+    const getBlogTitle = () => {
+        const { isEditMode } = props;
+        if (isEditMode) {
+            const {blog: { title }} = props;
+            return title;
+        }
+        return '';
     }
 
     const [state, setState] = useState({
         error: null,
-        editorState: EditorState.createEmpty(),
-        title: ''
+        editorState: getEditorState(),
+        title: getBlogTitle()
     })
     const postRequest = useReuqest('POST', `${baseAPIUrl}/blog/new`)
     const navigate = useNavigate();
@@ -62,25 +83,9 @@ export const RichTextEditorV2 = (props) => {
 
     }
 
-    const { isEditMode } = props;
-    const headerTitle = isEditMode ? "Edit your blog" : "Write something today"
-    if (isEditMode) {
-        // const {blog: { title, content }} = props;
-        // setState({
-        //     ...state,
-        //     title
-        // });
-        // const html = content
-        // const contentBlock = htmlToDraft(html);
-        // if (contentBlock) {
-        //     const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-        //     const editorState = EditorState.createWithContent(contentState);
-        //     setState({
-        //         ...state,
-        //         editorState
-        //     })
-        // }
-    }
+
+    const headerTitle = props.isEditMode ? "Edit your blog" : "Write something today"
+
 
     return (
         <div className="text-editor">

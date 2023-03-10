@@ -49,16 +49,11 @@ export const EditUser = memo(() => {
     const postRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
 
     const handleSubmit = async () => {
-        const reqBody = {
-            username,
-            realname,
-            emailaddr,
-            githubaddr,
-            linkedinaddr
-        };
+        
         if (!username || !realname) {
             return;
         }
+        const reqBody = {...state, username};
         const { editorState } = state;
         const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
         reqBody.introduction = content;
@@ -85,6 +80,7 @@ export const EditUser = memo(() => {
     }
 
     const handleFiledChange = (fieldName, event) => {
+        console.log(state);
         setState({
             ...state,
             [fieldName]: event.target.value

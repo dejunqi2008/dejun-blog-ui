@@ -1,6 +1,5 @@
 import { Button, TextField } from "@mui/material"
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { baseAPIUrl } from '../utils/commUtils';
 import loadsh from 'lodash'
 import axios from "axios";
@@ -25,10 +24,6 @@ export const SearchPanel = ({ author, isAuth, setBlogPosts }) => {
     };
 
     const handleDebounceInputChange = useCallback(loadsh.debounce(handleInputChange, 2000), [])
-    const navigate = useNavigate();
-    const handleButtonClick = () => {
-        return navigate(`/${author}/blog/create`)
-    }
 
     return <>
         <TextField

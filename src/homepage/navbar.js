@@ -22,10 +22,9 @@ export default function NavBar() {
     const renderToRightBtn = () => {
         if (!user.isLoggedInUser) {
             return <Button className="top-right-btn" onClick={handleLoginBtnClick}>Login</Button>
-        }
-        if (isAuth) {
+        } else {
             return <Button className="top-right-btn">
-                <Link to={`/${username}/blog/create`} className="router-link">Write</Link>
+                <Link to={`/${user.username}/blog/create`} className="router-link">Write</Link>
             </Button>
         }
 

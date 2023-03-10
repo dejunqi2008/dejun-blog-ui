@@ -1,7 +1,8 @@
-
-import moment from "../../node_modules/moment/moment";
-import { Link, Typography } from "../../node_modules/@mui/material/index";
-import { Alert } from "../../node_modules/@mui/material/index";
+import moment from "moment/moment";
+import { Typography, Alert } from "@mui/material";
+import { Link } from "react-router-dom";
+import parse from 'html-react-parser';
+import { memo } from "react";
 
 export const ListPanel = ({blogListData, error}) => {
 
@@ -15,14 +16,20 @@ export const ListPanel = ({blogListData, error}) => {
             const { id, title, content, createtime, author } = blog;
             comp.push((
                 <div className="title-wrapper" key={id}>
-                    <p className="title"><Link href="#">{title}</Link></p>
+                    <p className="title"><Link to={`/${author}/blog/${id}`}>{title}</Link></p>
                     <div className="info-wrapper">
                         <span>
-                            <Link href="">{author}</Link>
+                            <Link >{author}</Link>
                         </span>&nbsp;&nbsp;&nbsp;
                         <span>{moment(createtime).format('LLL')}</span>
                     </div>
-                    <Typography noWrap className="content">{content}</Typography>
+                    <Typography noWrap className="content">{parse(content, {
+                        replace: dom => {
+                            if (dom.name === 'p') {
+                                dom.name = 'span'
+                            }
+                        }
+                    })}</Typography>
                 </div>
             ));
         })
@@ -33,3 +40,5 @@ export const ListPanel = ({blogListData, error}) => {
     return <div className="blog-list">{renderPostData(blogListData, error)}</div>
 
 }
+
+export const MemoListPannel = memo(ListPanel);

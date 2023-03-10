@@ -13,7 +13,6 @@ export const DeleteModal = ({modalOpen, setModalOpen, blogId}) => {
     const handleDelete = async () => {
         try {
             const resp = await requestDelete({});
-            console.log(resp);
             const { status, data: {errno} } = resp;
             if (status === 200 && errno === 0) {
                 setModalOpen(false);

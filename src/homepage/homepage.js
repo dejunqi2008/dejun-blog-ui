@@ -23,7 +23,6 @@ export const HomePage = () => {
 
     const handleSignUp = async () => {
         const resp = await postRequest(credential)
-        console.log(resp);
         const { data: {message, errno}, status} = resp;
         if (status === 200 && errno === 0) {
             return navigate(`/${credential.username}`);

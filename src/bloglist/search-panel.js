@@ -8,10 +8,8 @@ export const SearchPanel = ({ author, isAuth, setBlogPosts }) => {
 
     const [searchVal, setSearchVal] = useState('');
     useEffect(() => {
-        console.log('fetch data');
         axios.get(`${baseAPIUrl}/blog/list?author=${author}&keyword=${searchVal}`)
         .then(resp => {
-            console.log(resp);
             const { data: {data, errno}, status} = resp;
             if (status === 200 && errno === 0) {
                 setBlogPosts(data);

@@ -23,7 +23,6 @@ export const UserIntro = () => {
         isadmin
     } = data;
 
-    console.log(data)
     const isAuth = useAuth()(username);
     const navigate = useNavigate();
 

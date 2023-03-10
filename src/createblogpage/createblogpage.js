@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 export const CreateNewBlogPage = () => {
     const { user } = useContext(UserContext);
-    // console.log(user)
     return <RichTextEditorV2
                 blog={null}
                 isEditMode={false}

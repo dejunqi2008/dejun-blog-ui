@@ -9,6 +9,7 @@ import { baseAPIUrl } from "../utils/commUtils";
 import draftToHtml from "draftjs-to-html";
 import { useNavigate } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import axios from "axios";
 
 
 export const EditUser = memo(() => {
@@ -49,11 +50,16 @@ export const EditUser = memo(() => {
     const postRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
 
     const handleSubmit = async () => {
-        
+        const {
+            realname,
+            emailaddr,
+            githubaddr,
+            linkedinaddr} = state;
         if (!username || !realname) {
             return;
         }
-        const reqBody = {...state, username};
+
+        const reqBody = {username, realname, emailaddr, githubaddr, linkedinaddr};
         const { editorState } = state;
         const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
         reqBody.introduction = content;
@@ -80,7 +86,6 @@ export const EditUser = memo(() => {
     }
 
     const handleFiledChange = (fieldName, event) => {
-        console.log(state);
         setState({
             ...state,
             [fieldName]: event.target.value

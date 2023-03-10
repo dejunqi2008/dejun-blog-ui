@@ -32,9 +32,7 @@ export const LoginPage= ({modalOpen, setModalOpen}) => {
         if (!credential.username || !credential.password) return;
         try {
             const resp = await axios.post(baseAPIUrl + '/user/login', credential);
-            console.log(resp);
             const {data: { data, errno }, status} = resp;
-            console.log('handleLogin', data);
             if (status === 200 && errno === 0) {
                 const { username, realname, accessToken} = data;
                 setCookie('accessToken', accessToken, {path: '/'})

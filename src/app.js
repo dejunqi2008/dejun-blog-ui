@@ -15,7 +15,7 @@ function App() {
         realname: '',
         isLoggedInUser: false
     });
-    const [cookies, setCookie] = useCookies(['accessToken']);
+    const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
     
     useEffect(() => {
         const accessToken = cookies.accessToken;
@@ -25,7 +25,6 @@ function App() {
                 if (status === 200 && errno !== -1) {
                     const { username, realname, isLoggedInUser } = data;
                     setUser({
-                        ...user,
                         username,
                         realname,
                         isLoggedInUser: isLoggedInUser
@@ -40,10 +39,11 @@ function App() {
         <div id='app-container'>
             <CookiesProvider >
                 <UserContext.Provider value={{
-                    user: user,
-                    setUser: setUser,
+                    user,
+                    setUser,
                     cookies,
-                    setCookie
+                    setCookie,
+                    removeCookie
                 }}>
                     <RouterProvider router={router} />
                 </UserContext.Provider>

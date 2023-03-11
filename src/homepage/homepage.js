@@ -1,15 +1,15 @@
 import { UserContext } from "../userContext/user-context"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { Button, TextField, Box } from "@mui/material";
-import './homepage.css'
-import { useRequest } from "../utils/hookUtils";
+import { Button, TextField, Box, ButtonGroup } from "@mui/material";
 import { baseAPIUrl } from "../utils/commUtils";
+import axios from "axios";
+import './homepage.css'
 
 export const HomePage = () => {
-    const { user } = useContext(UserContext);
+    const { user, setUser, setCookie } = useContext(UserContext);
     const navigate = useNavigate();
-    const postRequest = useRequest('POST', `${baseAPIUrl}/user/new`);
+
     const [credential, setCredential] = useState({
         username: '',
         password: ''
@@ -22,14 +22,48 @@ export const HomePage = () => {
     }, [user.isLoggedInUser]);
 
     const handleSignUp = async () => {
-        const resp = await postRequest(credential)
-        const { data: {message, errno}, status} = resp;
-        if (status === 200 && errno === 0) {
-            return navigate(`/${credential.username}`);
+        if (!credential.username || !credential.password) {
+            return setError(new Error('Both username and password are required'));
         }
-        setError(new Error(message));
+        try {
+            let resp = await axios.post(`${baseAPIUrl}/user/new`, credential);
+            const { data: {message, errno}, status} = resp;
+            if (status === 200 && errno === 0) {
+                return await handleLogin();
+            }
+            setError(new Error(message));
+        } catch (err) {
+            setError(err);
+        }
+    }
+
+
+
+    const handleLogin = async () => {
+        if (!credential.username || !credential.password) {
+            return setError(new Error('Both username and password are required'));
+        }
+        try {
+            const resp = await axios.post(`${baseAPIUrl}/user/login`, credential);
+            const {data: { data, errno }, status} = resp;
+            if (status === 200 && errno === 0) {
+                const { username, realname, accessToken} = data;
+                setCookie('accessToken', accessToken, {path: '/'})
+                setUser({
+                    ...user,
+                    username,
+                    realname,
+                    isLoggedInUser: true
+                })
+                return navigate(`/${credential.username}`);
+            }
+            
+        } catch (err) {
+            setError(err);
+        }
         
     }
+
 // label={!!error ? 'Incorrect username or password' : 'Username'}
     return <div id="home-page">
         <Box sx={{margin: '8px 8px 100px 8px'}}>
@@ -40,6 +74,7 @@ export const HomePage = () => {
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
+                display: 'flex'
             }}
             noValidate
             autoComplete="off"
@@ -57,7 +92,7 @@ export const HomePage = () => {
             />
             <TextField
                 id="outlined-password-input"
-                label={!!error ? error.message : "Username"}
+                label={!!error ? error.message : "password"}
                 error={!!error}
                 type="password"
                 margin="normal"
@@ -68,9 +103,17 @@ export const HomePage = () => {
                 })}
             />
         </Box>
-        <Box sx={{margin: '8px'}}>
-            <Button variant="outlined" onClick={handleSignUp}>Signup</Button>
+
+        <Box sx={{margin: '16px 8px', 'textAlign': 'right'}}>
+            <ButtonGroup
+                disableElevation
+                variant="outlined"
+                aria-label="Disabled elevation buttons">
+                <Button onClick={handleSignUp}>SIGNUP</Button>
+                <Button onClick={handleLogin}>LOGIN</Button>
+            </ButtonGroup>
         </Box>
         
+
     </div>
 }

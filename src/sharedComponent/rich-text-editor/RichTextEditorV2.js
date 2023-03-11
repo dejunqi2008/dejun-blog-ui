@@ -3,7 +3,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import './RichTextEditor.css';
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Button, TextField, ButtonGroup } from "@mui/material";
 import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from "draftjs-to-html";
 import { baseAPIUrl } from "../../utils/commUtils";
@@ -104,13 +104,21 @@ export const RichTextEditorV2 = (props) => {
                 editorClassName="editorClassName"
                 onEditorStateChange={handleEditorChange}
             />
-            <Button
+            {/* <Button
                 variant="outlined"
                 className="submit-btn"
                 disabled={!props.user.isLoggedInUser}
                 onClick={handleSubmit}>
                 Submit
-            </Button>
+            </Button> */}
+            <ButtonGroup
+                variant="outlined"
+                className="submit-btn"
+                disableElevation
+                aria-label="Disabled elevation buttons">
+                <Button onClick={handleSubmit}>Submit</Button>
+                <Button onClick={props.onCancel}>Cancel</Button>
+            </ButtonGroup>
         </div>
     );
 }

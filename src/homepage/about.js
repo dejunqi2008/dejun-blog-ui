@@ -4,10 +4,7 @@ import { SocialIcon } from "react-social-icons";
 import './about.css';
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import parse from 'html-react-parser';
-
 import { useAuth } from "../utils/hookUtils";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../userContext/user-context";
 
 export const UserIntro = () => {
 
@@ -30,13 +27,13 @@ export const UserIntro = () => {
 
     const renderContactInfoSection = () => {
         const contacts = [];
-        if (emailaddr !== 'null') {
+        if (!!emailaddr && emailaddr !== 'null') {
             contacts.push(<div key="0"><SocialIcon url={`mailto:${emailaddr}`} /></div>);
         }
-        if (githubaddr !== 'null') {
+        if (!!githubaddr && githubaddr !== 'null') {
             contacts.push(<div key="1"><SocialIcon url={githubaddr} /></div>);
         }
-        if (linkedinaddr !== 'null') {
+        if (!!linkedinaddr && linkedinaddr !== 'null') {
             contacts.push(<div key="2"><SocialIcon url={linkedinaddr} /></div>);
         }
         return <section className="contact-info-wrapper">

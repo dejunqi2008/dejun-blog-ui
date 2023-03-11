@@ -25,7 +25,6 @@ function App() {
                 if (status === 200 && errno !== -1) {
                     const { username, realname, isLoggedInUser } = data;
                     setUser({
-                        ...user,
                         username,
                         realname,
                         isLoggedInUser: isLoggedInUser

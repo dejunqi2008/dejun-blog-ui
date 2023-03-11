@@ -40,7 +40,6 @@ export const LoginPage= ({modalOpen, setModalOpen}) => {
                     ...user,
                     username,
                     realname,
-                    accessToken,
                     isLoggedInUser: true
                 })
                 setCredential({

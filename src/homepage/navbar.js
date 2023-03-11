@@ -2,30 +2,51 @@ import AppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useParams } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Box, Button, CssBaseline, IconButton, Toolbar } from "@mui/material";
+import { Box, Button, ButtonGroup, CssBaseline, IconButton, Toolbar } from "@mui/material";
 import { LoginPage } from "../loginpage/loginpage";
 import { UserContext } from "../userContext/user-context";
 import './navbar.css'
-import { useAuth } from "../utils/hookUtils";
-
 
 export default function NavBar() {
 
-    const { user } = useContext(UserContext);
+    const { user, setUser, removeCookie, cookies } = useContext(UserContext);
     const [modalOpen, setModalOpen] = useState(false);
     const { username } = useParams();
-    const isAuth = useAuth()(username);
 
     const handleLoginBtnClick = () => {
         setModalOpen(true);
     }
+
+    const handleLogOutClick = () => {
+        console.log(cookies);
+        removeCookie('accessToken');
+        setUser({
+            ...user,
+            username: '',
+            realname: '',
+            isLoggedInUser: false
+        })
+        
+    }
+
     const renderToRightBtn = () => {
         if (!user.isLoggedInUser) {
             return <Button className="top-right-btn" onClick={handleLoginBtnClick}>Login</Button>
         } else {
-            return <Button className="top-right-btn">
-                <Link to={`/${user.username}/blog/create`} className="router-link">Write</Link>
-            </Button>
+            return (
+                <ButtonGroup
+                    className="top-right-btn"
+                    disableElevation
+                    variant="text"
+                    aria-label="Disabled elevation buttons">
+                    <Button>
+                        <Link to={`/${user.username}/blog/create`} className="router-link">
+                            Write
+                        </Link>
+                    </Button>
+                    <Button onClick={handleLogOutClick}>Log out</Button>
+                </ButtonGroup>
+            );
         }
 
     }

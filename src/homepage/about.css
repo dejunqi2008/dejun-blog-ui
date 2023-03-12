@@ -2,10 +2,22 @@
 
 
 .profile {
-    margin-bottom: 2rem !important;
+    float: right;
 }
 
 
 .intro-btn {
     float: right;
 }
+
+.contact-info-wrapper {
+    margin: 1rem auto;
+    display: flex;
+    text-align: center;
+}
+
+.social-info {
+    width: 2rem !important;
+    height: 2rem !important;
+}
+

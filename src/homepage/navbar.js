@@ -18,7 +18,6 @@ export default function NavBar() {
     }
 
     const handleLogOutClick = () => {
-        console.log(document.cookie);
         removeCookie('accessToken');
         document.cookie = "cookiename= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
         setUser({

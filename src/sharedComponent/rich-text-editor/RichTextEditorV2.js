@@ -12,9 +12,9 @@ import { useRequest } from "../../utils/hookUtils";
 
 export const RichTextEditorV2 = (props) => {
 
-    const getEditorState = () => {
+    const { isEditMode } = props;
 
-        const { isEditMode } = props;
+    const getEditorState = () => {
         if (isEditMode) {
             const {blog: { content }} = props;
             const html = content;
@@ -29,7 +29,6 @@ export const RichTextEditorV2 = (props) => {
     }
 
     const getBlogTitle = () => {
-        const { isEditMode } = props;
         if (isEditMode) {
             const {blog: { title }} = props;
             return title;
@@ -42,7 +41,14 @@ export const RichTextEditorV2 = (props) => {
         editorState: getEditorState(),
         title: getBlogTitle()
     })
-    const postRequest = useRequest('POST', `${baseAPIUrl}/blog/new`)
+
+    let endpoint = `${baseAPIUrl}/blog/new`;
+    if (isEditMode) {
+        const {blog: { id }} = props;
+        endpoint = `${baseAPIUrl}/blog/update?id=${id}`;
+    }
+
+    const postRequest = useRequest('POST', endpoint);
     const navigate = useNavigate();
     const handleEditorChange = (editorState) => {
         setState({
@@ -69,11 +75,16 @@ export const RichTextEditorV2 = (props) => {
         if (!title || !dummyDom.innerText) {
             return; // nonthing to submiyt
         }
-        
+
         try {
             const resp = await postRequest({title, content, username});
             const { data: { data }, status } = resp;
+            console.log(resp)
             if (status === 200) {
+                setState({
+                    ...state,
+                    error: null
+                })
                 return navigate(`/${username}/blog/${data.id}`);
             }
         } catch (error) {
@@ -88,7 +99,7 @@ export const RichTextEditorV2 = (props) => {
 
     return (
         <div className="text-editor">
-            {state.error && <Alert severity="error">Something went wrong, refresh the page to try again.</Alert>}
+            {state.error && <Alert severity="error">{state.error.message}</Alert>}
             <h1>{headerTitle}</h1>
             <TextField
                 label="title"
@@ -104,13 +115,6 @@ export const RichTextEditorV2 = (props) => {
                 editorClassName="editorClassName"
                 onEditorStateChange={handleEditorChange}
             />
-            {/* <Button
-                variant="outlined"
-                className="submit-btn"
-                disabled={!props.user.isLoggedInUser}
-                onClick={handleSubmit}>
-                Submit
-            </Button> */}
             <ButtonGroup
                 variant="outlined"
                 className="submit-btn"

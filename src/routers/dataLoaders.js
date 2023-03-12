@@ -6,6 +6,7 @@ export const BlogDetailDataLoader = async ({ params }) => {
     const res = {data: null, error: null};
     try {
         const {data, status} =  await axios.get(baseAPIUrl + `/blog/detail?id=${blogId}`);
+        console.log(data, status)
         if (status === 200) {
             res.data = data.data;
         }

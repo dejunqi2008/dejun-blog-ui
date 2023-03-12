@@ -9,6 +9,7 @@ export const EditBlog = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     if (error) {
+        console.log('EditBlog', error)
         return <Alert severity="error">Something went wrong, refresh the page to try again.</Alert>
     }
 

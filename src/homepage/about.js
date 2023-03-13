@@ -5,7 +5,10 @@ import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import parse from 'html-react-parser';
 import { useAuth } from "../utils/hookUtils";
 import { Link } from "react-router-dom";
+import { baseAPIUrl } from "../utils/commUtils";
+
 import './about.css';
+
 
 export const UserIntro = () => {
 
@@ -16,11 +19,11 @@ export const UserIntro = () => {
         introduction,
         emailaddr,
         githubaddr,
-        linkedinaddr
+        linkedinaddr,
+        profilephoto
     } = data;
 
     const isAuth = useAuth()(username);
-    const navigate = useNavigate();
 
     const renderContactInfoSection = () => {
         const contacts = [];
@@ -38,10 +41,6 @@ export const UserIntro = () => {
         </section>
     };
 
-    const handleBtnClick = () => {
-        return navigate(`/user/edit/${username}`)
-    }
-
     const renderButtonGroup = () => {
         if (isAuth) {
             return (
@@ -53,11 +52,13 @@ export const UserIntro = () => {
         return null;
     }
 
+    let imgSrc = !!profilephoto ? `${baseAPIUrl}${profilephoto}` : "https://s3.bukalapak.com/img/3033332333/large/Komik_Digital_Crayon_Shinchan_34_ebook.png.webp"
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <div className="square">
                 <div className="profile">
-                    <Avatar alt={realname} src="https://s3.bukalapak.com/img/3033332333/large/Komik_Digital_Crayon_Shinchan_34_ebook.png.webp" sx={{ width: 150, height: 150 }} />
+                    <Avatar alt={realname} src={imgSrc} sx={{ width: 150, height: 150 }} />
                     {renderContactInfoSection()}
                 </div>
                 {!!introduction ? parse(introduction) : 'Update your profile'}

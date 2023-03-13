@@ -11,7 +11,7 @@ export const useRequest = (method, url) => {
         case 'GET':
             return () => axios.get(url);
         case 'POST':
-            return (reqBody) => axios.post(url, {...reqBody, accessToken})
+            return (reqBody, config={}) => axios.post(url, {...reqBody, accessToken}, config)
         case 'DELETE':
             return (reqBody) => axios.delete(url, {...reqBody, accessToken})
         default:

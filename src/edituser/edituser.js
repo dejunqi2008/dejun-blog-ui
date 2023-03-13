@@ -10,8 +10,16 @@ import draftToHtml from "draftjs-to-html";
 import { useNavigate } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
+import './edituser.css'
 
-
+async function postImage({image}) {
+    const formData = new FormData();
+    formData.append("image", image)
+  
+    const result = await axios.post('http://localhost:8000/api/images/new', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    return result.data
+  }
+  
 export const EditUser = memo(() => {
     const {data: { data }, error} = useLoaderData();
     const navigate = useNavigate();
@@ -47,25 +55,32 @@ export const EditUser = memo(() => {
         editorState: getEditorState()
     });
 
-    const postRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
+    const [profilephoto, setProfilephoto] = useState('');
+
+    const [file, setFile] = useState(null)
+
+    const postUserRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
+
 
     const handleSubmit = async () => {
         const {
             realname,
             emailaddr,
             githubaddr,
-            linkedinaddr} = state;
+            linkedinaddr,
+        } = state;
+
         if (!username || !realname) {
             return;
         }
 
-        const reqBody = {username, realname, emailaddr, githubaddr, linkedinaddr};
+        const reqBody = {username, realname, emailaddr, githubaddr, linkedinaddr, profilephoto};
         const { editorState } = state;
         const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
         reqBody.introduction = content;
 
         try {
-            const resp = await postRequest(reqBody);
+            const resp = await postUserRequest(reqBody);
             const { data, status } = resp;
             if (status === 200 && data.errno === 0) {
                 return navigate(`/${username}`);
@@ -85,7 +100,7 @@ export const EditUser = memo(() => {
         });
     }
 
-    const handleFiledChange = (fieldName, event) => {
+    const handleFieldChange = (fieldName, event) => {
         setState({
             ...state,
             [fieldName]: event.target.value
@@ -96,19 +111,19 @@ export const EditUser = memo(() => {
         const fieldNameMapping = {
             realname: {
                 label: 'Full Name',
-                func: (e) => handleFiledChange('realname', e)
+                func: (e) => handleFieldChange('realname', e)
             },
             emailaddr: {
                 label: 'Email',
-                func: (e) => handleFiledChange('emailaddr', e)
+                func: (e) => handleFieldChange('emailaddr', e)
             },
             githubaddr: {
                 label: 'Github',
-                func: (e) => handleFiledChange('githubaddr', e)
+                func: (e) => handleFieldChange('githubaddr', e)
             },
             linkedinaddr: {
                 label: 'LinkedIn',
-                func: (e) => handleFiledChange('linkedinaddr', e)
+                func: (e) => handleFieldChange('linkedinaddr', e)
             }
         }
 
@@ -129,6 +144,19 @@ export const EditUser = memo(() => {
         return components;
     }
 
+    const submit = event => {
+        if (!file) return;
+        event.preventDefault()
+        postImage({image: file}).then(result => {
+            setProfilephoto(result.data.imagePath)
+        })
+      }
+
+      const fileSelected = event => {
+        const file = event.target.files[0]
+        setFile(file)
+      }
+
     return (
         <div className="text-editor">
             {state.error && <Alert severity="error">Something went wrong, refresh the page to try again.</Alert>}
@@ -141,6 +169,12 @@ export const EditUser = memo(() => {
                 noValidate
                 autoComplete="off">
                 {renderFilds()}
+            </Box>
+            <Box>
+                <form onSubmit={submit}>
+                    <input id="profile-img-upload" onChange={fileSelected} type="file" accept="image/*" />
+                    {!profilephoto && <Button type="submit" disabled={!file}>upload</Button>}
+                </form>
             </Box>
             
             <Editor

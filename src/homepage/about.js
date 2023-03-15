@@ -1,7 +1,7 @@
 import {  Box, Button} from "@mui/material";
-import { Avatar, Grid } from "../../node_modules/@mui/material/index";
+import { Avatar } from "../../node_modules/@mui/material/index";
 import { SocialIcon } from "react-social-icons";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import parse from 'html-react-parser';
 import { useAuth } from "../utils/hookUtils";
 import { Link } from "react-router-dom";
@@ -56,7 +56,7 @@ export const UserIntro = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <div className="square">
+            <div className="square text-container">
                 <div className="profile">
                     <Avatar alt={realname} src={imgSrc} sx={{ width: 150, height: 150 }} />
                     {renderContactInfoSection()}

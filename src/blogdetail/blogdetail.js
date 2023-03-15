@@ -34,6 +34,7 @@ export const BlogDetail = () => {
     const renderButton = () => {
         return (
             <ButtonGroup
+                className="edit-btn"
                 disableElevation
                 variant="outlined"
                 aria-label="Disabled elevation buttons">
@@ -60,7 +61,7 @@ export const BlogDetail = () => {
                     </span>
                     <span>{getFormatDate(createtime)}</span>
                 </div>
-                <div className="content-wrapper">
+                <div className="content-wrapper text-container">
                     {parse(content)}
                 </div>
                 {isAuth && renderButton()}

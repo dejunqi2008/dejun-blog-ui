@@ -1,0 +1,12 @@
+input[type="file"] {
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin: 10px auto 30px 8px;
+    height: 50px;
+    width: 223px;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    top: 30px;
+}

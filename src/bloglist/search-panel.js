@@ -1,38 +1,25 @@
-import { Button, TextField } from "@mui/material"
-import { useCallback, useEffect, useState } from "react";
-import { baseAPIUrl } from '../utils/commUtils';
+import { TextField } from "@mui/material"
+import { useCallback } from "react";
 import loadsh from 'lodash'
-import axios from "axios";
 
-export const SearchPanel = ({ author, isAuth, setBlogPosts }) => {
 
-    const [searchVal, setSearchVal] = useState('');
-    useEffect(() => {
-        axios.get(`${baseAPIUrl}/blog/list?author=${author}&keyword=${searchVal}`)
-        .then(resp => {
-            const { data: {data, errno}, status} = resp;
-            if (status === 200 && errno === 0) {
-                setBlogPosts(data);
-            }
-        });
-    }, [searchVal])
+export const SearchPanel = ({ setPage, setSearchVal }) => {
 
     const handleInputChange = (event) => {
         setSearchVal(event.target.value);
+        setPage(1);
     };
 
     const handleDebounceInputChange = useCallback(loadsh.debounce(handleInputChange, 2000), [])
 
-    return <>
+    return <div className="search-panel">
         <TextField
+            fullWidth
             label="Search posts"
-            id="search-bar"
             autoFocus
             margin="dense"
             onChange={handleDebounceInputChange}
             size="small"
         />
-    </>
+    </div>
 }
-
-// export const MemoSearchPannel = memo(SearchPanel)

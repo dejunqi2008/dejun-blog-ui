@@ -4,7 +4,7 @@ import { useRequest } from "../utils/hookUtils";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export const DeleteModal = ({modalOpen, setModalOpen, blogId}) => {
+export const DeleteModal = ({author, modalOpen, setModalOpen, blogId}) => {
 
     const requestDelete = useRequest('POST', `${baseAPIUrl}/blog/delete?id=${blogId}`)
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ export const DeleteModal = ({modalOpen, setModalOpen, blogId}) => {
             const { status, data: {errno} } = resp;
             if (status === 200 && errno === 0) {
                 setModalOpen(false);
-                return navigate('/blogs');
+                return navigate(`/${author}/blogs`);
             } else {
                 setError(new Error("Falied to delete, try again later"))
             }

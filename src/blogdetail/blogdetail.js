@@ -1,17 +1,19 @@
-import { Alert, Button, ButtonGroup } from "@mui/material";
+import { Alert, Button, ButtonGroup, Chip } from "@mui/material";
 import parse from 'html-react-parser';
 import React, { useContext, useState } from "react";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams, Link } from "react-router-dom";
 import { UserContext } from "../userContext/user-context";
 import { getFormatDate } from "../utils/commUtils";
 import { DeleteModal } from '../deletepage/deletepage';
 import { useAuth } from "../utils/hookUtils";
+import { CONSTANTS } from "../constants";
 import './blogdetail.css'
+
 
 export const BlogDetail = () => {
 
     const { user } = useContext(UserContext);
-    const {data, error } = useLoaderData();
+    const {data, error, tagsAssociatedWithBlog } = useLoaderData();
     const navigate = useNavigate();
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const { username } = useParams();
@@ -19,7 +21,7 @@ export const BlogDetail = () => {
 
 
     if (!!error) {
-        return <Alert severity="error">Something went wrong, refresh the page to try again.</Alert>
+        return <Alert severity="error">{CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
     }
     const { title, content, createtime, author, id } = data;
 
@@ -63,6 +65,13 @@ export const BlogDetail = () => {
                 </div>
                 <div className="content-wrapper text-container">
                     {parse(content)}
+                </div>
+                <div className="blog-tag-wrapper">
+                    {!!tagsAssociatedWithBlog && tagsAssociatedWithBlog.map(tag => {
+                        return <Link key={tag.id} to={`/${username}/blog/tag/${tag.tagname}`}>  
+                            <Chip variant="filled" label={tag.tagname}/>
+                        </Link>
+                    })}
                 </div>
                 {isAuth && renderButton()}
             </div>

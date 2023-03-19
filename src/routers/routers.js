@@ -1,7 +1,7 @@
 import { BlogDetail } from '../blogdetail/blogdetail';
 import { EditBlog } from '../editblog/editblog';
 import { createBrowserRouter } from 'react-router-dom';
-import { BlogDetailDataLoader, UserDataLoader } from './dataLoaders';
+import { BlogDetailDataLoader, UserDataLoader, TagsBlogDataLoader } from './dataLoaders';
 import { CreateNewBlogPage } from '../createblogpage/createblogpage';
 import NavBar from '../homepage/navbar';
 import { Alert } from '@mui/material';
@@ -9,6 +9,7 @@ import { UserIntro } from '../homepage/about';
 import { BlogList } from '../bloglist/bloglist';
 import { HomePage } from '../homepage/homepage';
 import { EditUser } from '../edituser/edituser';
+import { AggregatedBlogs } from '../aggregatedblogs/aggregatedblogs';
 
 const PageName = {
     USERINTRO: 'USERINTRO',
@@ -16,7 +17,8 @@ const PageName = {
     CREATE_BLOG: 'CREATE_BLOG',
     EDIT_BLOG: 'EDIT_BLOG',
     BLOG_DETAIL: 'BLOG_DETAIL',
-    EDIT_USER: 'EDIT_USER'
+    EDIT_USER: 'EDIT_USER',
+    TAG_BLOGS: 'TAG_BLOGS'
 }
 
 const elementPrivider = (name) => {
@@ -39,6 +41,9 @@ const elementPrivider = (name) => {
             break;
         case PageName.EDIT_USER:
             component = <EditUser />
+            break;
+        case PageName.TAG_BLOGS:
+            component = <AggregatedBlogs />
             break;
         default:
             break;
@@ -72,6 +77,7 @@ export const router = createBrowserRouter([
     {
         path: '/:username/blogs',
         element: getComponent(PageName.BLOGLIST),
+        loader: TagsBlogDataLoader,
     },
     {
         path: '/:username/blog/:blogId',
@@ -80,12 +86,16 @@ export const router = createBrowserRouter([
     },
     {
         path: '/:username/blog/create',
-        element: getComponent(PageName.CREATE_BLOG)
+        element: getComponent(PageName.CREATE_BLOG),
+        loader: TagsBlogDataLoader
     },
     {
         path: '/:username/blog/edit/:blogId',
         element: getComponent(PageName.EDIT_BLOG),
         loader: BlogDetailDataLoader
+    }, {
+        path: '/:username/blog/tag/:tagname',
+        element: getComponent(PageName.TAG_BLOGS),
     }
 ])
 

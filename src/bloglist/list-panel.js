@@ -25,7 +25,7 @@ export const ListPanel = ({blogListData, error}) => {
                     </div>
                     <Typography noWrap className="content">{parse(content || '', {
                         replace: dom => {
-                            if (dom.name === 'p' || dom.name === 'ul') {
+                            if (dom.name === 'p' || dom.name === 'ul' || dom.name === 'div') {
                                 dom.name = 'span'
                             }
                         }

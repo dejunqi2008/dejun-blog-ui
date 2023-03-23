@@ -1,18 +1,34 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import './RichTextEditor.css';
-import { Alert, Button, TextField, ButtonGroup } from "@mui/material";
+import {
+    Alert,
+    Button,
+    TextField,
+    ButtonGroup,
+    Autocomplete,
+    Stack,
+    Chip
+} from "@mui/material";
 import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from "draftjs-to-html";
 import { baseAPIUrl } from "../../utils/commUtils";
 import { useNavigate } from "react-router-dom";
 import { useRequest } from "../../utils/hookUtils";
 
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import './RichTextEditor.css';
+
 export const RichTextEditorV2 = (props) => {
 
-    const { isEditMode } = props;
+    const {
+        isEditMode,
+        tags,
+        displayTags,
+        handleSubmitTags,
+        selectedTags,
+        setSelectedTags
+    } = props;
 
     const getEditorState = () => {
         if (isEditMode) {
@@ -79,18 +95,18 @@ export const RichTextEditorV2 = (props) => {
         try {
             const resp = await postRequest({title, content, username});
             const { data: { data }, status } = resp;
-            console.log(resp)
             if (status === 200) {
                 setState({
                     ...state,
                     error: null
                 })
+                const blogId = data.id;
+                handleSubmitTags(selectedTags, blogId);
                 return navigate(`/${username}/blog/${data.id}`);
             }
         } catch (error) {
             setState({...state, error});
         }
-
     }
 
 
@@ -115,6 +131,25 @@ export const RichTextEditorV2 = (props) => {
                 editorClassName="editorClassName"
                 onEditorStateChange={handleEditorChange}
             />
+            {isEditMode && <div className="blog-tags">
+                {displayTags.map(tag => <Chip key={tag.id} className="blog-tag" variant="filled" label={tag.tagname} />)}
+            </div>}
+            <Stack spacing={3} sx={{ width: 500 }}>
+                <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={tags.filter(tag => !displayTags.map(tag => tag.id).includes(tag.id))}
+                    getOptionLabel={(option) => option.tagname}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="choose tag for this post"
+                        />
+                    )}
+                    onChange={(event, values) => setSelectedTags(values)}
+                />
+            </Stack>
             <ButtonGroup
                 variant="outlined"
                 className="submit-btn"

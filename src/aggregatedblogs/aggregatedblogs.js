@@ -1,7 +1,7 @@
 
 import Pagination from '@mui/material/Pagination';
 import axios from 'axios';
-import {  useState, useEffect, memo } from "react";
+import {  useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { baseAPIUrl } from '../utils/commUtils';
 import { MemoListPannel } from "../bloglist/list-panel";
@@ -35,12 +35,12 @@ export const AggregatedBlogs = () => {
                     setError(new Error("Something went wrong"))
                 }
             })
-            .catch(err => setError(err)) 
+            .catch(err => setError(err))
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
     const handlePageChange = (event, page) => {
         event.preventDefault();
-        console.log(page)
         setPage(page)
     }
 

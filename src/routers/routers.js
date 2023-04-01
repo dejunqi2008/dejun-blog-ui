@@ -93,7 +93,8 @@ export const router = createBrowserRouter([
         path: '/:username/blog/edit/:blogId',
         element: getComponent(PageName.EDIT_BLOG),
         loader: BlogDetailDataLoader
-    }, {
+    },
+    {
         path: '/:username/blog/tag/:tagname',
         element: getComponent(PageName.TAG_BLOGS),
     }

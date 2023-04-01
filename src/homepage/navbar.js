@@ -9,7 +9,7 @@ import './navbar.css'
 
 export default function NavBar() {
 
-    const { user, setUser, removeCookie, cookies } = useContext(UserContext);
+    const { user, setUser, removeCookie } = useContext(UserContext);
     const [modalOpen, setModalOpen] = useState(false);
     const { username } = useParams();
 

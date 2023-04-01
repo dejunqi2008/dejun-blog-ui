@@ -1,14 +1,13 @@
 import { useLoaderData } from "react-router-dom"
 import { useState, memo  } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState, convertToRaw } from "draft-js";
+import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
 import { Alert, Button, ButtonGroup, TextField, Box } from "@mui/material";
 import htmlToDraft from 'html-to-draftjs';
 import { useAuth, useRequest } from "../utils/hookUtils";
 import { baseAPIUrl } from "../utils/commUtils";
 import draftToHtml from "draftjs-to-html";
 import { useNavigate } from "react-router-dom";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import axios from "axios";
 import './edituser.css'
 
@@ -43,24 +42,14 @@ export const EditUser = memo(() => {
 
     const isAuth = useAuth()(username);
 
-    const getEditorState = () => {
-        if (!!introduction) {
-            const contentBlock = htmlToDraft(introduction);
-            if (contentBlock) {
-                const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-                return EditorState.createWithContent(contentState);
-            }
-        }
-        return EditorState.createEmpty();
-    }
+    const [editorState, setEditorState] = useState({ content: introduction })
 
     const [state, setState] = useState({
         error,
         realname,
         emailaddr,
         githubaddr,
-        linkedinaddr,
-        editorState: getEditorState()
+        linkedinaddr
     });
 
     const [profilephoto, setProfilephoto] = useState('');
@@ -68,6 +57,12 @@ export const EditUser = memo(() => {
     const [file, setFile] = useState(null)
 
     const postUserRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
+
+    const handleContentChange = (content) => {
+        setEditorState({
+            content
+        })
+    }
 
 
     const handleSubmit = async () => {
@@ -84,8 +79,8 @@ export const EditUser = memo(() => {
 
         const reqBody = {username, realname, emailaddr, githubaddr, linkedinaddr, profilephoto};
         const { editorState } = state;
-        const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-        reqBody.introduction = content;
+        // const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        reqBody.introduction = '';
 
         try {
             const resp = await postUserRequest(reqBody);
@@ -99,13 +94,6 @@ export const EditUser = memo(() => {
             setState({ ...state, error })
         }
 
-    }
-
-    const handleEditorChange = (editorState) => {
-        setState({
-            ...state,
-            editorState
-        });
     }
 
     const handleFieldChange = (fieldName, event) => {
@@ -185,12 +173,16 @@ export const EditUser = memo(() => {
                 </form>
             </Box>
             
-            <Editor
+            {/* <Editor
                 editorState={state.editorState}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
                 onEditorStateChange={handleEditorChange}
+            /> */}
+            <Editor
+                handleContentChange={handleContentChange}
+                content={editorState.content}
             />
             <ButtonGroup
                 className="submit-btn"

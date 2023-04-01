@@ -7,7 +7,7 @@ export const BlogDetailDataLoader = async (args) => {
     const res = {};
     try {
         const results = await Promise.all([
-            axios.get(baseAPIUrl + `/blog/detail?id=${blogId}`),
+            axios.get(`${baseAPIUrl}/blog/detail?id=${blogId}`),
             axios.get(`${baseAPIUrl}/tags`),
             axios.get(`${baseAPIUrl}/tags?blog_id=${blogId}`)
         ]);
@@ -18,8 +18,6 @@ export const BlogDetailDataLoader = async (args) => {
     } catch (err) {
         res.error = err;
     }
-
-    console.log(res);
 
     return res;
 };

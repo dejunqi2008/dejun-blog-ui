@@ -4,7 +4,7 @@ import {
     TextField,
     ButtonGroup,
     Autocomplete,
-    Stack,
+    Stack, Switch
 } from "@mui/material";
 import { UserContext } from "../userContext/user-context";
 import { useContext, useState } from "react";
@@ -29,6 +29,13 @@ export const CreateNewBlogPage = () => {
         title: ''
     })
 
+    const disableSubmitBtn = () => {
+        const { content, title, error } = editorState;
+        const dom = document.createElement('div');
+        dom.innerHTML = content;
+        return !dom.innerText || !(title.trim()) || error;
+    }
+
     const onCancel = () => {
         return navigate(`/${user.username}/blogs`);
     }
@@ -39,6 +46,7 @@ export const CreateNewBlogPage = () => {
             tagIds: tags.map(tag => tag.id)
         })
     }
+
 
     const handleSubmit = async () => {
         try {
@@ -105,7 +113,7 @@ export const CreateNewBlogPage = () => {
                 className="submit-btn"
                 disableElevation
                 aria-label="Disabled elevation buttons">
-                <Button onClick={handleSubmit}>Submit</Button>
+                <Button onClick={handleSubmit} disabled={disableSubmitBtn()}>Submit</Button>
                 <Button onClick={onCancel}>Cancel</Button>
             </ButtonGroup>
         </div>

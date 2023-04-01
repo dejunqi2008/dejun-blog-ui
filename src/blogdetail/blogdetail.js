@@ -7,6 +7,7 @@ import { getFormatDate } from "../utils/commUtils";
 import { DeleteModal } from '../deletepage/deletepage';
 import { useAuth } from "../utils/hookUtils";
 import { CONSTANTS } from "../constants";
+import Showdown from "showdown";
 import './blogdetail.css'
 
 
@@ -19,11 +20,14 @@ export const BlogDetail = () => {
     const { username } = useParams();
     const isAuth = useAuth()(username);
 
+    const converter = new Showdown.Converter();
+
 
     if (!!error) {
         return <Alert severity="error">{CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
     }
-    const { title, content, createtime, author, id } = data;
+    const { title, content, createtime, author, id, markdown } = data;
+    console.log(!!markdown);
 
     const handleEdit = () => {
         return navigate(`/${author}/blog/edit/${id}`);
@@ -64,7 +68,7 @@ export const BlogDetail = () => {
                     <span>{getFormatDate(createtime)}</span>
                 </div>
                 <div className="content-wrapper text-container">
-                    {parse(content)}
+                    { parse(converter.makeHtml(content))}
                 </div>
                 <div className="blog-tag-wrapper">
                     {!!tagsAssociatedWithBlog && tagsAssociatedWithBlog.map(tag => {

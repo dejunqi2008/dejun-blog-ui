@@ -16,7 +16,7 @@ import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-import { TRANSFORMERS, $convertToMarkdownString,} from "@lexical/markdown";
+import { TRANSFORMERS} from "@lexical/markdown";
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
@@ -61,11 +61,11 @@ const editorConfig = {
 // actually use them.
 function HandleChangePlugin({ content }) {
     const [editor] = useLexicalComposerContext();
-    // console.log(content)
+
     useEffect(() => {
         // Focus the editor when the effect fires!
         editor.focus();
-        if (!!content) {
+        if (content) {
             editor.update(() => {
                 const root = $getRoot();
                 if (root.getTextContentSize() === 0) {
@@ -74,6 +74,7 @@ function HandleChangePlugin({ content }) {
                     const nodes = $generateNodesFromDOM(editor, dom);
                     root.select();
                     $insertNodes(nodes);
+
                 }
             });
         }
@@ -91,22 +92,18 @@ function onError(error) {
 
 export default function Editor({
     handleContentChange,
-    useMarkDown,
     content,
 }) {
 
     const onChange = (editorState, editor) => {
         editorState.read(() => {
-            // Read the contents of the EditorState here.
-            // const root = $getRoot();
-            // const selection = $getSelection();
-            const content = !!useMarkDown ? $convertToMarkdownString(TRANSFORMERS) : $generateHtmlFromNodes(editor)
+            const content = $generateHtmlFromNodes(editor)
             handleContentChange(content);
         });
     }
 
     return (
-        <LexicalComposer initialConfig={editorConfig}>
+        <LexicalComposer initialConfig={editorConfig} onError={onError}>
             <div className="editor-container">
                 <ToolbarPlugin />
                 <div className="editor-inner">

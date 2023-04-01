@@ -2,12 +2,9 @@ import { useLoaderData } from "react-router-dom"
 import { useState, memo  } from "react";
 import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
 import { Alert, Button, ButtonGroup, TextField, Box } from "@mui/material";
-import htmlToDraft from 'html-to-draftjs';
 import { useAuth, useRequest } from "../utils/hookUtils";
 import { baseAPIUrl } from "../utils/commUtils";
-import draftToHtml from "draftjs-to-html";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import './edituser.css'
 
@@ -77,10 +74,15 @@ export const EditUser = memo(() => {
             return;
         }
 
-        const reqBody = {username, realname, emailaddr, githubaddr, linkedinaddr, profilephoto};
-        const { editorState } = state;
-        // const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-        reqBody.introduction = '';
+        const reqBody = {
+            username,
+            realname,
+            emailaddr,
+            githubaddr,
+            linkedinaddr,
+            profilephoto,
+            introduction: editorState.content
+        };
 
         try {
             const resp = await postUserRequest(reqBody);

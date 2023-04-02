@@ -1,3 +1,3 @@
 
 
-https://dejun-blog-client.herokuapp.com/dejunqi
+https://www.dejun-cms.com/dejunqi

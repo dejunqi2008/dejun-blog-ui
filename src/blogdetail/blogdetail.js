@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import React, { useContext, useState } from "react";
 import { useLoaderData, useNavigate, useParams, Link } from "react-router-dom";
 import { UserContext } from "../userContext/user-context";
-import { getFormatDate } from "../utils/commUtils";
+import { getFormatDate, processHTMLCodeBlock } from "../utils/commUtils";
 import { DeleteModal } from '../deletepage/deletepage';
 import { useAuth } from "../utils/hookUtils";
 import { CONSTANTS } from "../constants";
@@ -26,8 +26,7 @@ export const BlogDetail = () => {
     if (!!error) {
         return <Alert severity="error">{CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
     }
-    const { title, content, createtime, author, id, markdown } = data;
-    console.log(!!markdown);
+    const { title, content, createtime, author, id } = data;
 
     const handleEdit = () => {
         return navigate(`/${author}/blog/edit/${id}`);
@@ -35,6 +34,11 @@ export const BlogDetail = () => {
 
     const handleDelete = () => {
         setDeleteModalOpen(true);
+    }
+
+    const processContentBeforeRendering = (textContent) => {
+        textContent = processHTMLCodeBlock(textContent);
+        return parse(converter.makeHtml(textContent))
     }
 
     const renderButton = () => {
@@ -68,7 +72,7 @@ export const BlogDetail = () => {
                     <span>{getFormatDate(createtime)}</span>
                 </div>
                 <div className="content-wrapper text-container">
-                    { parse(converter.makeHtml(content))}
+                    {processContentBeforeRendering(content)}
                 </div>
                 <div className="blog-tag-wrapper">
                     {!!tagsAssociatedWithBlog && tagsAssociatedWithBlog.map(tag => {

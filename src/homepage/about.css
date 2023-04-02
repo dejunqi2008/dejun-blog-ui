@@ -3,6 +3,8 @@
 
 .profile {
     float: right;
+    position: relative;
+    z-index: 99;
 }
 
 

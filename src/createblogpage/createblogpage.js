@@ -4,7 +4,7 @@ import {
     TextField,
     ButtonGroup,
     Autocomplete,
-    Stack, Switch
+    Stack
 } from "@mui/material";
 import { UserContext } from "../userContext/user-context";
 import { useContext, useState } from "react";

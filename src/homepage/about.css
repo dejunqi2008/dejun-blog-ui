@@ -1,6 +1,4 @@
 
-
-
 .profile {
     float: right;
     position: relative;
@@ -10,6 +8,7 @@
 
 .intro-btn {
     float: right;
+    margin-right: 8rem !important;
 }
 
 .contact-info-wrapper {
@@ -23,3 +22,8 @@
     height: 2rem !important;
 }
 
+
+.text-container {
+    min-height: 25rem;
+    max-width: 45rem;
+  }

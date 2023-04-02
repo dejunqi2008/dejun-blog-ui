@@ -41,6 +41,7 @@ export const CreateNewBlogPage = () => {
     }
 
     const submitTags = (tags, blogId) => {
+        if (tags.length === 0) return;
         return axios.post(`${baseAPIUrl}/associatetag/new`, {
             blogId,
             tagIds: tags.map(tag => tag.id)

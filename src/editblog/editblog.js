@@ -91,6 +91,7 @@ export const EditBlog = () => {
             <Editor
                 handleContentChange={handleContentChange}
                 content={content}
+
             />
             <div className="blog-tags">
                 {tagsAssociatedWithBlog.map(tag => <Chip key={tag.id} className="blog-tag" variant="filled" label={tag.tagname} />)}

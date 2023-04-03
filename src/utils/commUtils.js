@@ -16,7 +16,7 @@ export const processHTMLCodeBlock = (htmlStr) => {
     dom.innerHTML = htmlStr;
     const nodelist = dom.querySelectorAll('p');
     nodelist.forEach(node => {
-        const tagname = node.children[0].tagName;
+        const tagname = (!!node.children && !!node.children[0]) ? node.children[0].tagName : '';
         if (tagname === 'CODE') {
             node.appendChild(document.createElement('BR'))
             node.replaceWith(...node.childNodes);

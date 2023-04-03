@@ -97,6 +97,10 @@ export const router = createBrowserRouter([
     {
         path: '/:username/blog/tag/:tagname',
         element: getComponent(PageName.TAG_BLOGS),
+    },
+    {
+        path: '/:username/photos',
+        element: <div>Gallery Here</div>
     }
 ])
 

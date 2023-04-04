@@ -1,7 +1,6 @@
 import moment from "moment/moment";
-import { Typography, Alert } from "@mui/material";
+import { Alert } from "@mui/material";
 import { Link } from "react-router-dom";
-import parse from 'html-react-parser';
 import { memo } from "react";
 
 export const ListPanel = ({blogListData, error}) => {
@@ -13,7 +12,7 @@ export const ListPanel = ({blogListData, error}) => {
 
         const comp = [];
         listData?.forEach(blog => {
-            const { id, title, content, createtime, author } = blog;
+            const { id, title, createtime, author } = blog;
             comp.push((
                 <div className="title-wrapper" key={id}>
                     <Link to={`/${author}/blog/${id}`} className="title">{title}</Link>
@@ -30,7 +29,7 @@ export const ListPanel = ({blogListData, error}) => {
         return comp;
     }
 
-    return <div className="blog-list">{renderPostData(blogListData, error)}</div>
+    return <div className="list-panel">{renderPostData(blogListData, error)}</div>
 
 }
 

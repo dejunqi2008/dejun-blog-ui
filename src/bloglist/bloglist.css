@@ -35,6 +35,10 @@
     padding-bottom: 0.6rem;
 }
 
+.list-panel {
+    min-height: 26rem;
+}
+
 .blog-post {
     display: flex;
     flex-direction: row;

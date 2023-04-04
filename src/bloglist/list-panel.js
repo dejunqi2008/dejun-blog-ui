@@ -16,7 +16,7 @@ export const ListPanel = ({blogListData, error}) => {
             const { id, title, content, createtime, author } = blog;
             comp.push((
                 <div className="title-wrapper" key={id}>
-                    <p className="title"><Link to={`/${author}/blog/${id}`}>{title}</Link></p>
+                    <Link to={`/${author}/blog/${id}`} className="title">{title}</Link>
                     <div className="info-wrapper">
                         <span>
                             <Link >{author}</Link>

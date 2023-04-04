@@ -23,13 +23,6 @@ export const ListPanel = ({blogListData, error}) => {
                         </span>&nbsp;&nbsp;&nbsp;
                         <span>{moment(createtime).format('LLL')}</span>
                     </div>
-                    <Typography noWrap className="content">{parse(content || '', {
-                        replace: dom => {
-                            if (dom.name === 'p' || dom.name === 'ul' || dom.name === 'div') {
-                                dom.name = 'span'
-                            }
-                        }
-                    })}</Typography>
                 </div>
             ));
         })

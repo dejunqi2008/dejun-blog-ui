@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 
 export const HomePage = () => {
     const { user, setUser } = useContext(UserContext);
-    const [, setCookie, _] = useCookies(['accessToken'])
+    const [, setCookie, ,] = useCookies(['accessToken'])
     const navigate = useNavigate();
 
     const [credential, setCredential] = useState({

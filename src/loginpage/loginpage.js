@@ -28,7 +28,7 @@ export const LoginPage= ({modalOpen, setModalOpen}) => {
     const [error, setError] = useState(null);
 
     const { user, setUser } = useContext(UserContext);
-    const [, setCookie, _] = useCookies(['accessToken']);
+    const [, setCookie, ,] = useCookies(['accessToken']);
 
     const handleLogin = async () => {
         if (!credential.username || !credential.password) return;

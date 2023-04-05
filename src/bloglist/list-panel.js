@@ -2,6 +2,7 @@ import moment from "moment/moment";
 import { Alert } from "@mui/material";
 import { Link } from "react-router-dom";
 import { memo } from "react";
+import './list-panel.css';
 
 export const ListPanel = ({blogListData, error}) => {
 

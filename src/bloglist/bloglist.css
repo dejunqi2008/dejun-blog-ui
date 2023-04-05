@@ -1,24 +1,4 @@
 
-.title-wrapper {
-    padding: 15px 0;
-    border-bottom: 1px solid #ccc;
-    max-height: 9.5rem;
-    overflow: hidden;
-}
-.title-wrapper .title {
-    font-size: 20px;
-    font-weight: bold;
-}
-.title-wrapper .info-wrapper span,
-.title-wrapper .info-wrapper a {
-    font-size: 14px;
-    color: #999;
-}
-
-.title-wrapper a {
-    text-decoration: none;
-    color: inherit;
-}
 
 .content {
     margin-top: 1rem !important;
@@ -33,10 +13,6 @@
 .search-panel {
     border-bottom: 1px solid #ccc;
     padding-bottom: 0.6rem;
-}
-
-.list-panel {
-    min-height: 26rem;
 }
 
 .blog-post {

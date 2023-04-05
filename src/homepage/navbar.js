@@ -5,11 +5,14 @@ import React, { useContext, useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, IconButton, Toolbar } from "@mui/material";
 import { LoginPage } from "../loginpage/loginpage";
 import { UserContext } from "../userContext/user-context";
+// import Cookies from 'univer'
 import './navbar.css'
+import { useCookies } from "react-cookie";
 
 export default function NavBar() {
 
-    const { user, setUser, removeCookie } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const [, , removeCookie] = useCookies(['accessToken']);
     const [modalOpen, setModalOpen] = useState(false);
     const { username } = useParams();
 
@@ -18,7 +21,7 @@ export default function NavBar() {
     }
 
     const handleLogOutClick = () => {
-        removeCookie('accessToken');
+        removeCookie('accessToken', ['/']);
         document.cookie = "cookiename= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
         setUser({
             ...user,

@@ -5,9 +5,11 @@ import { Button, TextField, Box, ButtonGroup } from "@mui/material";
 import { baseAPIUrl } from "../utils/commUtils";
 import axios from "axios";
 import './homepage.css'
+import { useCookies } from "react-cookie";
 
 export const HomePage = () => {
-    const { user, setUser, setCookie } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const [, setCookie, _] = useCookies(['accessToken'])
     const navigate = useNavigate();
 
     const [credential, setCredential] = useState({

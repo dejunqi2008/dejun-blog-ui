@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import { baseAPIUrl } from "../utils/commUtils";
 import { UserContext } from "../userContext/user-context";
+import { useCookies } from "react-cookie";
 
 
 const style = {
@@ -26,7 +27,8 @@ export const LoginPage= ({modalOpen, setModalOpen}) => {
 
     const [error, setError] = useState(null);
 
-    const { user, setUser, setCookie } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const [, setCookie, _] = useCookies(['accessToken']);
 
     const handleLogin = async () => {
         if (!credential.username || !credential.password) return;

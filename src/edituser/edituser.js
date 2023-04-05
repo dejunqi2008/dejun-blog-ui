@@ -13,7 +13,7 @@ async function postImage({image}) {
     formData.append("image", image)
   
     const result = await axios.post(
-        'http://localhost:8000/api/images/new',
+        `${baseAPIUrl}/images/new`,
         formData,
         {
             headers: {

@@ -16,7 +16,7 @@ function App() {
         isAdmin: false,
         isLoggedInUser: false
     });
-    const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+    const [cookies, setCookie, _] = useCookies(['accessToken']);
     
     useEffect(() => {
         const accessToken = cookies.accessToken;
@@ -45,7 +45,6 @@ function App() {
                     setUser,
                     cookies,
                     setCookie,
-                    removeCookie
                 }}>
                     <RouterProvider router={router} />
                 </UserContext.Provider>

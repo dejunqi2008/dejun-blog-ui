@@ -46,13 +46,15 @@ export const HomePage = () => {
         try {
             const resp = await axios.post(`${baseAPIUrl}/user/login`, credential);
             const {data: { data, errno }, status} = resp;
+            console.log('handleLogin: ', data);
             if (status === 200 && errno === 0) {
-                const { username, realname, accessToken} = data;
+                const { username, realname, accessToken, isadmin} = data;
                 setCookie('accessToken', accessToken, {path: '/'})
                 setUser({
                     ...user,
                     username,
                     realname,
+                    isAdmin: !!isadmin,
                     isLoggedInUser: true
                 })
                 return navigate(`/${credential.username}`);
@@ -64,7 +66,6 @@ export const HomePage = () => {
         
     }
 
-// label={!!error ? 'Incorrect username or password' : 'Username'}
     return <div id="home-page">
         <Box sx={{margin: '8px 8px 100px 8px'}}>
             <h1>Hello vistor! </h1>

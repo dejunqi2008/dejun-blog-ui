@@ -13,6 +13,7 @@ function App() {
     const [user, setUser] = useState({
         username: '',
         realname: '',
+        isAdmin: false,
         isLoggedInUser: false
     });
     const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
@@ -25,6 +26,7 @@ function App() {
                 if (status === 200 && errno !== -1) {
                     const { username, realname, isLoggedInUser } = data;
                     setUser({
+                        ...user,
                         username,
                         realname,
                         isLoggedInUser: isLoggedInUser

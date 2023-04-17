@@ -1,16 +1,13 @@
 import { Alert, Button, ButtonGroup, Chip } from "@mui/material";
-import parse from 'html-react-parser';
 import React, { useContext, useState } from "react";
 import { useLoaderData, useNavigate, useParams, Link } from "react-router-dom";
 import { UserContext } from "../userContext/user-context";
-import { getFormatDate, processHTMLCodeBlock } from "../utils/commUtils";
+import { getFormatDate } from "../utils/commUtils";
 import { DeleteModal } from '../deletepage/deletepage';
 import { useAuth } from "../utils/hookUtils";
 import { CONSTANTS } from "../constants";
-import Showdown from "showdown";
 import './blogdetail.css'
 import { TextRenderer } from "../sharedComponent/text-renderer/TextRenderer";
-
 
 export const BlogDetail = () => {
 
@@ -20,9 +17,6 @@ export const BlogDetail = () => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const { username } = useParams();
     const isAuth = useAuth()(username);
-
-    const converter = new Showdown.Converter();
-
 
     if (!!error) {
         return <Alert severity="error">{CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
@@ -35,11 +29,6 @@ export const BlogDetail = () => {
 
     const handleDelete = () => {
         setDeleteModalOpen(true);
-    }
-
-    const processContentBeforeRendering = (textContent) => {
-        textContent = processHTMLCodeBlock(textContent);
-        return parse(converter.makeHtml(textContent))
     }
 
     const renderButton = () => {

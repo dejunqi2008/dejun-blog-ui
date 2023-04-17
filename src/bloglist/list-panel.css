@@ -6,12 +6,12 @@
     overflow: hidden;
 }
 .title-wrapper .title {
-    font-size: 20px;
+    font-size: 1.1rem;
     font-weight: bold;
 }
 .title-wrapper .info-wrapper span,
 .title-wrapper .info-wrapper a {
-    font-size: 14px;
+    font-size: 1.1rem;
     color: #999;
 }
 

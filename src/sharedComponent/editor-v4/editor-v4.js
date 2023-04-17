@@ -7,11 +7,12 @@ export const Editor = ({value, setValue}) => {
                     .replace(/&lt;/g, "<");
 
     return (
-        <div className="editor-container">
+        <div data-color-mode="light">
             <MDEditor
+                highlightEnable={true}
                 value={value}
                 onChange={setValue}
-                preview='edit'
+                // preview='edit'
                 height={400}
             />
         </div>

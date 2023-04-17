@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 import { useAuth } from "../utils/hookUtils";
 import { Link } from "react-router-dom";
 import { baseAPIUrl } from "../utils/commUtils";
+import { TextRenderer } from "../sharedComponent/text-renderer/TextRenderer";
 
 import './about.css';
 
@@ -61,7 +62,7 @@ export const UserIntro = () => {
                     <Avatar alt={realname} src={imgSrc} sx={{ width: 150, height: 150 }} />
                     {renderContactInfoSection()}
                 </div>
-                {!!introduction ? parse(introduction) : 'Update your profile'}
+                {!!introduction ? <TextRenderer content={introduction} /> : 'Update your profile'}
             </div>
             {renderButtonGroup()}
         </Box>

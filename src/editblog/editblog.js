@@ -12,25 +12,25 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { baseAPIUrl } from "../utils/commUtils";
 import { CONSTANTS } from "../constants";
-import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
+
+import { Editor } from "../sharedComponent/editor-v4/editor-v4";
 import { useRequest } from "../utils/hookUtils";
 import './editblog.css';
 
 
 export const EditBlog = () => {
-    const {
-        data: {
-            id, title, content, author
-        },
-        tags,
-        tagsAssociatedWithBlog,
-        error
-    } = useLoaderData();
+
+    const loaderData = useLoaderData();
+
+    const { data, tags, tagsAssociatedWithBlog } = loaderData;
+    const {id, author} = data;
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const [selectedTags, setSelectedTags] = useState([]);
-    const [editorState, setEditorState] = useState({ error, content, title })
     const postRequest = useRequest('POST', `${baseAPIUrl}/blog/update?id=${id}`)
+    const [error, setError] = useState(loaderData.error);
+    const [title, setTitle] = useState(data.title);
+    const [content, setContent] = useState(data.content);
     
     if (!!error) {
         return <Alert severity="error">{CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
@@ -50,7 +50,6 @@ export const EditBlog = () => {
     const handleSubmit = async () => {
         try {
             const { username } = user;
-            const {title, content} = editorState;
             const { data: { data }, status } = await postRequest({title, content, username})
             if (status === 200) {
                 const blogId = data.id;
@@ -58,40 +57,32 @@ export const EditBlog = () => {
                 return navigate(`/${username}/blog/${data.id}`);
             }
         } catch (error) {
-            setEditorState({ ...editorState, error })
+            setError(error);
         }
     }
 
     const handleTitleChange = (event) => {
         if (event && event.target) {
-            setEditorState({
-                ...editorState,
-                title: event.target.value
-            })
+            setTitle(event.target.value);
         }
     }
 
     const handleContentChange = (content) => {
-        setEditorState({
-            ...editorState,
-            content,
-        })
+        setContent(content)
     }
 
     return (
         <div className="text-editor">
-            {editorState.error && <Alert severity="error">{editorState.error.message}</Alert>}
             <TextField
                 label="title"
                 variant="outlined"
-                value={editorState.title}
+                value={title}
                 onChange={handleTitleChange}
                 fullWidth
             />
             <Editor
-                handleContentChange={handleContentChange}
-                content={content}
-
+                setValue={handleContentChange}
+                value={content}
             />
             <div className="blog-tags">
                 {tagsAssociatedWithBlog.map(tag => <Chip key={tag.id} className="blog-tag" variant="filled" label={tag.tagname} />)}

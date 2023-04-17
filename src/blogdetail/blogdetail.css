@@ -9,13 +9,13 @@ a {
 
 
 .title {
-    font-size: 20px;
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
 .info-container span,
 .info-container a {
-    font-size: 14px;
+    font-size: 0.8rem;
     color: #999;
 }
 

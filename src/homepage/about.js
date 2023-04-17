@@ -2,7 +2,6 @@ import {  Box, Button} from "@mui/material";
 import { Avatar } from "../../node_modules/@mui/material/index";
 import { SocialIcon } from "react-social-icons";
 import { useLoaderData, useParams } from "react-router-dom";
-import parse from 'html-react-parser';
 import { useAuth } from "../utils/hookUtils";
 import { Link } from "react-router-dom";
 import { baseAPIUrl } from "../utils/commUtils";

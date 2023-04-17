@@ -12,7 +12,8 @@ import { useNavigate, useLoaderData } from "react-router-dom";
 import { baseAPIUrl } from "../utils/commUtils";
 import axios from "axios";
 import { useRequest } from "../utils/hookUtils";
-import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
+// import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
+import { Editor } from "../sharedComponent/editor-v4/editor-v4";
 
 
 
@@ -23,14 +24,11 @@ export const CreateNewBlogPage = () => {
     const { tags } = useLoaderData();
     const postRequest = useRequest('POST', `${baseAPIUrl}/blog/new`);
     const [selectedTags, setSelectedTags] = useState([]);
-    const [editorState, setEditorState] = useState({
-        error: null,
-        content: '',
-        title: ''
-    })
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
 
     const disableSubmitBtn = () => {
-        const { content, title, error } = editorState;
         const dom = document.createElement('div');
         dom.innerHTML = content;
         return !dom.innerText || !(title.trim()) || error;
@@ -52,7 +50,6 @@ export const CreateNewBlogPage = () => {
     const handleSubmit = async () => {
         try {
             const { username } = user;
-            const {title, content} = editorState;
             const { data: { data }, status } = await postRequest({title, content, username})
             if (status === 200) {
                 const blogId = data.id;
@@ -60,29 +57,23 @@ export const CreateNewBlogPage = () => {
                 return navigate(`/${username}/blog/${data.id}`);
             }
         } catch (error) {
-            setEditorState({ ...editorState, error })
+            setError(error);
         }
     }
 
     const handleTitleChange = (event) => {
         if (event && event.target) {
-            setEditorState({
-                ...editorState,
-                title: event.target.value
-            })
+            setTitle(event.target.value);
         }
     }
 
     const handleContentChange = (content) => {
-        setEditorState({
-            ...editorState,
-            content,
-        })
+        setContent(content)
     }
 
     return (
         <div className="text-editor">
-            {editorState.error && <Alert severity="error">{editorState.error.message}</Alert>}
+            {error && <Alert severity="error">{error.message}</Alert>}
             <TextField
                 label="title"
                 variant="outlined"
@@ -91,7 +82,8 @@ export const CreateNewBlogPage = () => {
                 fullWidth
             />
             <Editor
-                handleContentChange={handleContentChange}
+                setValue={handleContentChange}
+                value={content}
             />
             <Stack spacing={3} sx={{ width: 300 }}>
                 <Autocomplete

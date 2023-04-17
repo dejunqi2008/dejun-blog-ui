@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom"
 import { useState, memo  } from "react";
-import Editor from "../sharedComponent/rich-text-editor/RichTextEditorV3";
+import { Editor } from "../sharedComponent/editor-v4/editor-v4";
 import { Alert, Button, ButtonGroup, TextField, Box } from "@mui/material";
 import { useAuth, useRequest } from "../utils/hookUtils";
 import { baseAPIUrl } from "../utils/commUtils";
@@ -39,7 +39,8 @@ export const EditUser = memo(() => {
 
     const isAuth = useAuth()(username);
 
-    const [editorState, setEditorState] = useState({ content: introduction })
+    // const [editorState, setEditorState] = useState({ content: introduction })
+    const [content, setContent] = useState(introduction);
 
     const [state, setState] = useState({
         error,
@@ -56,9 +57,7 @@ export const EditUser = memo(() => {
     const postUserRequest = useRequest('POST', `${baseAPIUrl}/user/update`);
 
     const handleContentChange = (content) => {
-        setEditorState({
-            content
-        })
+        setContent(content);
     }
 
 
@@ -81,7 +80,7 @@ export const EditUser = memo(() => {
             githubaddr,
             linkedinaddr,
             profilephoto,
-            introduction: editorState.content
+            introduction: content
         };
 
         try {
@@ -175,16 +174,9 @@ export const EditUser = memo(() => {
                 </form>
             </Box>
             
-            {/* <Editor
-                editorState={state.editorState}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
-                onEditorStateChange={handleEditorChange}
-            /> */}
             <Editor
-                handleContentChange={handleContentChange}
-                content={editorState.content}
+                setValue={handleContentChange}
+                value={content}
             />
             <ButtonGroup
                 className="submit-btn"

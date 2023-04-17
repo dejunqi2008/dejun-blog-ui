@@ -9,6 +9,7 @@ import { useAuth } from "../utils/hookUtils";
 import { CONSTANTS } from "../constants";
 import Showdown from "showdown";
 import './blogdetail.css'
+import { TextRenderer } from "../sharedComponent/text-renderer/TextRenderer";
 
 
 export const BlogDetail = () => {
@@ -65,14 +66,13 @@ export const BlogDetail = () => {
             <div className="blog-detail">
                 <h1 className="title">{title}</h1>
                 <div className="info-container">
-                    <span>
-                        {/* <a href="#">{author}</a> */}
-                        {author}
-                    </span>
+                    <span>{author}</span>
+                    &nbsp;&nbsp;&nbsp;
                     <span>{getFormatDate(createtime)}</span>
                 </div>
                 <div className="content-wrapper text-container">
-                    {processContentBeforeRendering(content)}
+                    {/* {processContentBeforeRendering(content)} */}
+                    <TextRenderer content={content} />
                 </div>
                 <div className="blog-tag-wrapper">
                     {!!tagsAssociatedWithBlog && tagsAssociatedWithBlog.map(tag => {

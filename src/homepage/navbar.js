@@ -5,14 +5,13 @@ import React, { useContext, useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, IconButton, Toolbar } from "@mui/material";
 import { LoginPage } from "../loginpage/loginpage";
 import { UserContext } from "../userContext/user-context";
-// import Cookies from 'univer'
 import './navbar.css'
 import { useCookies } from "react-cookie";
 
 export default function NavBar() {
 
     const { user, setUser } = useContext(UserContext);
-    const [, , removeCookie] = useCookies(['accessToken']);
+    const [, setCookie, ] = useCookies(['accessToken']);
     const [modalOpen, setModalOpen] = useState(false);
     const { username } = useParams();
 
@@ -21,8 +20,7 @@ export default function NavBar() {
     }
 
     const handleLogOutClick = () => {
-        removeCookie('accessToken', ['/']);
-        document.cookie = "cookiename= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+        setCookie('accessToken', 'expires = Thu, 01 Jan 1970 00:00:00 GMT', {path: '/'});
         setUser({
             ...user,
             username: '',
@@ -51,7 +49,6 @@ export default function NavBar() {
                 </ButtonGroup>
             );
         }
-
     }
 
     const vistorBtn = () => {
@@ -89,7 +86,10 @@ export default function NavBar() {
                     <Button>
                         <Link to={`/${username}/blogs`} className="router-link">BLOGPOSTS</Link>
                     </Button>
-                    {vistorBtn()}
+                    <Button>
+                        <Link to={`/${username}/gallery`} className="router-link" >Gallery</Link>
+                    </Button>
+                    {/* {vistorBtn()} */}
                     {renderToRightBtn()}
                 </Box>
                 </Toolbar>

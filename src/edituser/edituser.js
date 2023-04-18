@@ -8,24 +8,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './edituser.css'
 
-async function postImage({image}) {
+async function postImage({image, username}) {
     const formData = new FormData();
     formData.append("image", image)
-  
+    formData.append("username", username);
     const result = await axios.post(
-        `${baseAPIUrl}/images/new`,
-        formData,
-        {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
+        `${baseAPIUrl}/images/profile/new`,
+        formData, { headers: { 'Content-Type': 'multipart/form-data' } }
     )
     return result.data
   }
   
 export const EditUser = memo(() => {
-    const {data: { data }, error} = useLoaderData();
+
+    const loaderData = useLoaderData();
+    const {data: { data }} = loaderData
     const navigate = useNavigate();
     
     const {
@@ -39,16 +36,16 @@ export const EditUser = memo(() => {
 
     const isAuth = useAuth()(username);
 
-    // const [editorState, setEditorState] = useState({ content: introduction })
     const [content, setContent] = useState(introduction);
 
     const [state, setState] = useState({
-        error,
         realname,
         emailaddr,
         githubaddr,
         linkedinaddr
     });
+
+    const [error, setError] = useState(loaderData.error);
 
     const [profilephoto, setProfilephoto] = useState('');
 
@@ -89,10 +86,10 @@ export const EditUser = memo(() => {
             if (status === 200 && data.errno === 0) {
                 return navigate(`/${username}`);
             } else {
-                setState({...state, error: new Error(data.message)})
+                setError(new Error(data.message));
             }
         } catch (error) {
-            setState({ ...state, error })
+            setState(error);
         }
 
     }
@@ -144,19 +141,20 @@ export const EditUser = memo(() => {
     const submit = event => {
         if (!file) return;
         event.preventDefault()
-        postImage({image: file}).then(result => {
+        postImage({image: file, username}).then(result => {
+            console.log(result);
             setProfilephoto(result.data.imagePath)
-        })
-      }
+        }).catch(error => setError(error));
+    }
 
-      const fileSelected = event => {
+    const fileSelected = event => {
         const file = event.target.files[0]
         setFile(file)
-      }
+    }
 
     return (
         <div className="text-editor">
-            {state.error && <Alert severity="error">Something went wrong, refresh the page to try again.</Alert>}
+            {error && <Alert severity="error">{error.message}</Alert>}
             <h1>Edit your profile</h1>
             <Box
                 component="form"
@@ -170,7 +168,7 @@ export const EditUser = memo(() => {
             <Box>
                 <form onSubmit={submit}>
                     <input id="profile-img-upload" onChange={fileSelected} type="file" accept="image/*" />
-                    {!profilephoto && <Button type="submit" disabled={!file}>upload</Button>}
+                    {!profilephoto && <Button sx={{top: '30px'}} type="submit" disabled={!file}>upload</Button>}
                 </form>
             </Box>
             

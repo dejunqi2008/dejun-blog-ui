@@ -6,7 +6,3 @@ input[type="file"] {
     width: 223px;
     border-radius: 4px;
 }
-
-button[type="submit"] {
-    top: 30px;
-}

@@ -1,7 +1,7 @@
 import { BlogDetail } from '../blogdetail/blogdetail';
 import { EditBlog } from '../editblog/editblog';
 import { createBrowserRouter } from 'react-router-dom';
-import { BlogDetailDataLoader, UserDataLoader, TagsBlogDataLoader } from './dataLoaders';
+import { BlogDetailDataLoader, UserDataLoader, TagsBlogDataLoader, albumDataLoader } from './dataLoaders';
 import { CreateNewBlogPage } from '../createblogpage/createblogpage';
 import NavBar from '../homepage/navbar';
 import { Alert } from '@mui/material';
@@ -10,6 +10,9 @@ import { BlogList } from '../bloglist/bloglist';
 import { HomePage } from '../homepage/homepage';
 import { EditUser } from '../edituser/edituser';
 import { AggregatedBlogs } from '../aggregatedblogs/aggregatedblogs';
+import { Gallery } from '../gallery/gallery';
+import { AddPhotos } from '../gallery/create';
+import { Album } from '../gallery/album';
 
 const PageName = {
     USERINTRO: 'USERINTRO',
@@ -18,7 +21,10 @@ const PageName = {
     EDIT_BLOG: 'EDIT_BLOG',
     BLOG_DETAIL: 'BLOG_DETAIL',
     EDIT_USER: 'EDIT_USER',
-    TAG_BLOGS: 'TAG_BLOGS'
+    TAG_BLOGS: 'TAG_BLOGS',
+    GALLERY: 'GALLERY',
+    ALBUM: 'ALBUM',
+    ADD_PHOTOS: 'ADD_PHOTOS'
 }
 
 const elementPrivider = (name) => {
@@ -44,6 +50,15 @@ const elementPrivider = (name) => {
             break;
         case PageName.TAG_BLOGS:
             component = <AggregatedBlogs />
+            break;
+        case PageName.ADD_PHOTOS:
+            component = <AddPhotos />
+            break;
+        case PageName.GALLERY:
+            component = <Gallery />
+            break;
+        case PageName.ALBUM:
+            component = <Album />
             break;
         default:
             break;
@@ -98,9 +113,19 @@ export const router = createBrowserRouter([
         path: '/:username/blog/tag/:tagname',
         element: getComponent(PageName.TAG_BLOGS),
     },
-    // {
-    //     path: '/:username/photos',
-    //     element: <Editor />
-    // }
+    {
+        path: '/:username/gallery',
+        element: getComponent(PageName.GALLERY),
+        loader: albumDataLoader,
+    },
+    {
+        path: '/:username/gallery/:albumid',
+        element: getComponent(PageName.ALBUM)
+    },
+    {
+        path: '/:username/addphotos',
+        element: getComponent(PageName.ADD_PHOTOS),
+        loader: albumDataLoader,
+    }
 ])
 

@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './routers/routers'
 import { UserContext } from './userContext/user-context';
 import {  useEffect, useState } from 'react';
-import { CookiesProvider, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { baseAPIUrl } from './utils/commUtils';
 
@@ -17,6 +17,7 @@ function App() {
         isLoggedInUser: false
     });
     const [cookies, setCookie, _] = useCookies(['accessToken']);
+    const [userPhotos, setUserPhotos] = useState({});
     
     useEffect(() => {
         const accessToken = cookies.accessToken;
@@ -39,16 +40,16 @@ function App() {
 
     return (
         <div id='app-container'>
-            <CookiesProvider >
                 <UserContext.Provider value={{
                     user,
                     setUser,
                     cookies,
                     setCookie,
+                    userPhotos,
+                    setUserPhotos
                 }}>
                     <RouterProvider router={router} />
                 </UserContext.Provider>
-            </CookiesProvider>
         </div>
     );
 }

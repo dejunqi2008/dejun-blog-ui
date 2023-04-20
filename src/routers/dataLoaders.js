@@ -49,3 +49,17 @@ export const UserDataLoader = async ({ params }) => {
     return res;
 }
 
+export const albumDataLoader = async ({ params }) => {
+    const { username } = params;
+    const res = {};
+    try {
+        const resp = await axios.get(`${baseAPIUrl}/albums?username=${username}`);
+        if (resp.status === 200) {
+            res.albums = resp.data;
+        }
+    } catch( err) {
+        res.error = err;
+    }
+    return res;
+}
+

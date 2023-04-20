@@ -10,14 +10,10 @@ import 'react-image-gallery/styles/css/image-gallery.css'
 
 export const Album = () => {
     const {albumid, username} = useParams();
-    const {userPhotos, setUserPhotos} = useContext(UserContext);
     const [albumPhotos, setAlbumPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchUserPhotos = async (album_id) => {
-        if (userPhotos[album_id]) {
-            return userPhotos[album_id];
-        }
         const resp = await axios.get(`${baseAPIUrl}/images/userphotos?username=${username}&albumid=${album_id}`);
         return resp.status === 200 ? resp.data.data : [];
     }
@@ -26,10 +22,6 @@ export const Album = () => {
         fetchUserPhotos(albumid)
             .then(resp => {
                 setAlbumPhotos(resp);
-                setUserPhotos({
-                    ...userPhotos,
-                    [albumid]: resp
-                })
                 setIsLoading(false);
             })
             .catch(err => console.log(err));
@@ -42,6 +34,8 @@ export const Album = () => {
     if (albumPhotos.length === 0) {
         return null;
     }
+
+    console.log(albumPhotos);
 
     return (
         <div>

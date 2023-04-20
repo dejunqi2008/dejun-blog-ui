@@ -39,6 +39,10 @@ export const Album = () => {
         return <div>Loading images ... </div>
     }
 
+    if (albumPhotos.length === 0) {
+        return null;
+    }
+
     return (
         <div>
             {/* <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>

@@ -2,23 +2,23 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { baseAPIUrl } from "../utils/commUtils";
 import { useParams } from "react-router-dom";
-// import {ImageList, ImageListItem } from '@mui/material'
 import IMageGallery from 'react-image-gallery';
+import { Loading } from "../sharedComponent/loading-pinner/loading";
 import 'react-image-gallery/styles/css/image-gallery.css'
 import './gallery.css';
-import { Loading } from "../sharedComponent/loading-pinner/loading";
-
 
 export const Album = () => {
     const {albumid, username} = useParams();
     const [albumPhotos, setAlbumPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const onImageLoad = (_) => {
+    const setDisplayAttribute = (_) => {
         const loadingIcon = document.querySelector('.loader-wrapper');
-        loadingIcon.style.display = "none";
-        const gallery = document.querySelector('.image-gellery');
-        gallery.style.display = "block";
+        if (!!loadingIcon) {
+            loadingIcon.style.display = "none";
+        }
+        const gallery = document.querySelector('.image-gallery');
+        gallery.style.display = 'block';
 
     }
 
@@ -53,11 +53,10 @@ export const Album = () => {
             <IMageGallery
                 items={albumPhotos.map(url => ({
                     original: `${baseAPIUrl}${url}`,
-                    loading: "lazy"
+                    // loading: "lazy"
                 }))}
                 showThumbnails={false}
-                additionalClass="image-gellery"
-                onImageLoad={onImageLoad}
+                onImageLoad={() => setTimeout(setDisplayAttribute, 1000)}
             />
         </div>
     );

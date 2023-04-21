@@ -69,8 +69,7 @@ export const HomePage = () => {
 
     return <div id="home-page">
         <Box sx={{margin: '8px 8px 100px 8px'}}>
-            <h1>Hello vistor! </h1>
-            <p>This is a simple blog (CMS) system I built for fun and for my personal use and not intended to be made public. But you are very welcome to sign up and play a round with it. Once sign up, your data will be deleted from the database within 24 hours</p>
+            <h1>Login:  </h1>
         </Box>
         <Box
             component="form"
@@ -111,7 +110,7 @@ export const HomePage = () => {
                 disableElevation
                 variant="outlined"
                 aria-label="Disabled elevation buttons">
-                <Button onClick={handleSignUp}>SIGNUP</Button>
+                {/* <Button onClick={handleSignUp}>SIGNUP</Button> */}
                 <Button onClick={handleLogin}>LOGIN</Button>
             </ButtonGroup>
         </Box>

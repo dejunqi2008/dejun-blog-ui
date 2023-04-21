@@ -15,7 +15,7 @@ export const Gallery = () => {
     const { albums } = loaderData;
 
     const renderAlbumLink = () => {
-        return albums.map(album => (
+        return albums.map(album => (album.owner_visibility === 0 || isAuth) && (
             <ListItem disablePadding key={album.id}>
                 <ListItemButton>
                     <ListItemIcon>

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 // import {ImageList, ImageListItem } from '@mui/material'
 import IMageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css'
+import './gallery.css';
 
 
 export const Album = () => {
@@ -34,8 +35,6 @@ export const Album = () => {
         return null;
     }
 
-    console.log(albumPhotos);
-
     return (
         <div>
             {/* <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
@@ -57,6 +56,7 @@ export const Album = () => {
                     loading: "lazy"
                 }))}
                 showThumbnails={false}
+                additionalClass="image-gellery"
             />
         </div>
     );

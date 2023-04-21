@@ -13,6 +13,7 @@ import { AggregatedBlogs } from '../aggregatedblogs/aggregatedblogs';
 import { Gallery } from '../gallery/gallery';
 import { AddPhotos } from '../gallery/create';
 import { Album } from '../gallery/album';
+import { Footer } from '../homepage/footer';
 
 const PageName = {
     USERINTRO: 'USERINTRO',
@@ -70,7 +71,8 @@ const elementPrivider = (name) => {
 const getComponent = (pagename) => {
     return <>
         <NavBar />
-        {elementPrivider(pagename)}
+            {elementPrivider(pagename)}
+        <Footer />
     </>
 }
 

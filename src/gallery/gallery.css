@@ -5,3 +5,7 @@
 .image-gellery .image-gallery-right-nav .image-gallery-svg {
     height: 50px !important;
 }
+
+.image-gellery {
+    display: none;
+}

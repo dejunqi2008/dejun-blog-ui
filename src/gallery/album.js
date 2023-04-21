@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import IMageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css'
 import './gallery.css';
+import { Loading } from "../sharedComponent/loading-pinner/loading";
 
 
 export const Album = () => {
@@ -13,10 +14,19 @@ export const Album = () => {
     const [albumPhotos, setAlbumPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    const onImageLoad = (_) => {
+        const loadingIcon = document.querySelector('.loader-wrapper');
+        loadingIcon.style.display = "none";
+        const gallery = document.querySelector('.image-gellery');
+        gallery.style.display = "block";
+
+    }
+
     const fetchUserPhotos = async (album_id) => {
         const resp = await axios.get(`${baseAPIUrl}/images/userphotos?username=${username}&albumid=${album_id}`);
         return resp.status === 200 ? resp.data.data : [];
     }
+
     useEffect(() => {
         setIsLoading(true);
         fetchUserPhotos(albumid)
@@ -28,7 +38,7 @@ export const Album = () => {
     }, []);
 
     if (isLoading) {
-        return <div>Loading images ... </div>
+        return <Loading />
     }
 
     if (albumPhotos.length === 0) {
@@ -37,19 +47,9 @@ export const Album = () => {
 
     return (
         <div>
-            {/* <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                {albumPhotos.map((src) => (
-                    <ImageListItem key={src}>
-                    <img
-                        src={`${baseAPIUrl}${src}`}
-                        srcSet={`${baseAPIUrl}${src}`}
-                        alt="user photo"
-                        loading="lazy"
-                    />
-                    </ImageListItem>
-                ))}
-            </ImageList> */}
-
+            <div className="loader-wrapper">
+                <Loading />
+            </div>
             <IMageGallery
                 items={albumPhotos.map(url => ({
                     original: `${baseAPIUrl}${url}`,
@@ -57,6 +57,7 @@ export const Album = () => {
                 }))}
                 showThumbnails={false}
                 additionalClass="image-gellery"
+                onImageLoad={onImageLoad}
             />
         </div>
     );

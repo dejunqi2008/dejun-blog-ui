@@ -26,6 +26,7 @@ a {
 
 .edit-btn {
     float: right;
+    margin-bottom: 4.5rem;
 }
 
 .text-container code {

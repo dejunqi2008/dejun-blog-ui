@@ -110,7 +110,7 @@ export const HomePage = () => {
                 disableElevation
                 variant="outlined"
                 aria-label="Disabled elevation buttons">
-                <Button onClick={handleSignUp}>SIGNUP</Button>
+                {/* <Button onClick={handleSignUp}>SIGNUP</Button> */}
                 <Button onClick={handleLogin}>LOGIN</Button>
             </ButtonGroup>
         </Box>

@@ -4,7 +4,6 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useLoaderData, useParams, Link, useNavigate } from "react-router-dom";
 import {
-    Skeleton,
     FormControl,
     Select, 
     Alert, 
@@ -15,6 +14,7 @@ import {
     InputLabel
 } from "@mui/material";
 import { CONSTANTS } from "../constants";
+import { Loading } from '../sharedComponent/loading-pinner/loading'
 import './create.css';
 
 
@@ -83,18 +83,12 @@ export const AddPhotos = () => {
         setAlbum(event.target.value);
     }
 
-    const renderLoading = (
-        <Skeleton variant="rectangular" width="100%">
-          <div style={{ paddingTop: '57%' }} />
-        </Skeleton>
-    );
-
     if (!!error) {
         return <Alert severity="error">{error.message || CONSTANTS.ERROR.GENERAL_ERROR_MSG}</Alert>
     }    
 
     return (
-        isLoading ? renderLoading :
+        isLoading ? <Loading /> :
         <div>
             <Box >Add photos</Box>
             <Box sx={{ margin: '10px 0 10px 0'}}>

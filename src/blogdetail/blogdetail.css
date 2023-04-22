@@ -3,6 +3,10 @@
     margin: 0 auto;
 }
 
+.blog-detail img {
+    max-width: 100%;
+}
+
 a {
     text-decoration-line: none;
 }

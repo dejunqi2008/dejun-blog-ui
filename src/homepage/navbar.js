@@ -5,8 +5,8 @@ import React, { useContext, useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, IconButton, Toolbar } from "@mui/material";
 import { LoginPage } from "../loginpage/loginpage";
 import { UserContext } from "../userContext/user-context";
-import './navbar.css'
 import { useCookies } from "react-cookie";
+import './navbar.css'
 
 export default function NavBar() {
 
@@ -51,16 +51,6 @@ export default function NavBar() {
         }
     }
 
-    const vistorBtn = () => {
-        if (!user.isLoggedInUser) {
-            return (
-                <Button>
-                    <Link to="/" className="router-link">vistor</Link>
-                </Button>
-            );
-        }
-    }
-
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -89,7 +79,6 @@ export default function NavBar() {
                     <Button>
                         <Link to={`/${username}/gallery`} className="router-link" >Gallery</Link>
                     </Button>
-                    {/* {vistorBtn()} */}
                     {renderToRightBtn()}
                 </Box>
                 </Toolbar>

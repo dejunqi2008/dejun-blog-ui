@@ -7,7 +7,7 @@ import axios from "axios";
 import './homepage.css'
 import { useCookies } from "react-cookie";
 
-export const HomePage = () => {
+const HomePage = () => {
     const { user, setUser } = useContext(UserContext);
     const [, setCookie, ,] = useCookies(['accessToken'])
     const navigate = useNavigate();
@@ -118,3 +118,5 @@ export const HomePage = () => {
 
     </div>
 }
+
+export default HomePage;

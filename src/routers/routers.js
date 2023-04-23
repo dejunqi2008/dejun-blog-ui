@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import { BlogDetail } from '../blogdetail/blogdetail';
 import { EditBlog } from '../editblog/editblog';
 import { createBrowserRouter } from 'react-router-dom';
@@ -5,15 +6,21 @@ import { BlogDetailDataLoader, UserDataLoader, TagsBlogDataLoader, albumDataLoad
 import { CreateNewBlogPage } from '../createblogpage/createblogpage';
 import NavBar from '../homepage/navbar';
 import { Alert } from '@mui/material';
-import { UserIntro } from '../homepage/about';
+import  UserIntro  from '../homepage/about';
 import { BlogList } from '../bloglist/bloglist';
-import { HomePage } from '../homepage/homepage';
+
 import { EditUser } from '../edituser/edituser';
 import { AggregatedBlogs } from '../aggregatedblogs/aggregatedblogs';
 import { Gallery } from '../gallery/gallery';
 import { AddPhotos } from '../gallery/create';
 import { Album } from '../gallery/album';
 import { Footer } from '../homepage/footer';
+import { Loading } from '../sharedComponent/loading-pinner/loading';
+
+
+const HomePage = lazy(async () => (await import('../homepage/homepage')));
+
+
 
 const PageName = {
     USERINTRO: 'USERINTRO',
@@ -70,9 +77,11 @@ const elementPrivider = (name) => {
 
 const getComponent = (pagename) => {
     return <>
-        <NavBar />
-            {elementPrivider(pagename)}
-        <Footer />
+        <Suspense fallback={<Loading />}>
+            <NavBar />
+                {elementPrivider(pagename)}
+            <Footer />
+        </Suspense>
     </>
 }
 

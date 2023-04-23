@@ -10,7 +10,7 @@ import { TextRenderer } from "../sharedComponent/text-renderer/TextRenderer";
 import './about.css';
 
 
-export const UserIntro = () => {
+const UserIntro = () => {
 
     const { data: {data } } = useLoaderData();
     const { username } = useParams();
@@ -67,3 +67,5 @@ export const UserIntro = () => {
         </Box>
     );
 }
+
+export default UserIntro;

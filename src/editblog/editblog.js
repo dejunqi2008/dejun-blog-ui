@@ -18,7 +18,7 @@ import { useRequest } from "../utils/hookUtils";
 import './editblog.css';
 
 
-export const EditBlog = () => {
+const EditBlog = () => {
 
     const loaderData = useLoaderData();
 
@@ -114,3 +114,5 @@ export const EditBlog = () => {
         </div>
     )
 }
+
+export default EditBlog;

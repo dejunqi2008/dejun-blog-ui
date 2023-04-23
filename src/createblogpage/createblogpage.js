@@ -17,7 +17,7 @@ import { Editor } from "../sharedComponent/editor-v4/editor-v4";
 
 
 
-export const CreateNewBlogPage = () => {
+const CreateNewBlogPage = () => {
 
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
@@ -113,3 +113,5 @@ export const CreateNewBlogPage = () => {
     );
 
 }
+
+export default CreateNewBlogPage;

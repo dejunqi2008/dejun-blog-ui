@@ -19,7 +19,7 @@ async function postImage({image, username}) {
     return result.data
   }
   
-export const EditUser = memo(() => {
+const EditUser = memo(() => {
 
     const loaderData = useLoaderData();
     const {data: { data }} = loaderData
@@ -186,4 +186,6 @@ export const EditUser = memo(() => {
             </ButtonGroup>
         </div>
     );
-})
+});
+
+export default EditUser;

@@ -9,7 +9,7 @@ import { baseAPIUrl } from "../utils/commUtils";
 import { MemoTagPanel } from "../tagpanel/tagpanel";
 import './bloglist.css'
 
-export const BlogList = () => {
+const BlogList = () => {
 
     const { username } = useParams();
     const { tags } = useLoaderData();
@@ -70,3 +70,5 @@ export const BlogList = () => {
         </div>
     </div>;
 }
+
+export default BlogList;

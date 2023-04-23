@@ -1,26 +1,29 @@
-import { Suspense, lazy } from 'react';
-import { BlogDetail } from '../blogdetail/blogdetail';
-import { EditBlog } from '../editblog/editblog';
+import {Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { BlogDetailDataLoader, UserDataLoader, TagsBlogDataLoader, albumDataLoader } from './dataLoaders';
-import { CreateNewBlogPage } from '../createblogpage/createblogpage';
+import {
+    BlogDetailDataLoader,
+    UserDataLoader,
+    TagsBlogDataLoader,
+    albumDataLoader
+} from './dataLoaders';
 import NavBar from '../homepage/navbar';
 import { Alert } from '@mui/material';
-import  UserIntro  from '../homepage/about';
-import { BlogList } from '../bloglist/bloglist';
-
-import { EditUser } from '../edituser/edituser';
-import { AggregatedBlogs } from '../aggregatedblogs/aggregatedblogs';
 import { Gallery } from '../gallery/gallery';
 import { AddPhotos } from '../gallery/create';
 import { Album } from '../gallery/album';
 import { Footer } from '../homepage/footer';
 import { Loading } from '../sharedComponent/loading-pinner/loading';
+import { BlogDetail } from '../blogdetail/blogdetail';
 
+import HomePage from '../homepage/homepage'
+const AggregatedBlogs = lazy(() => import('../aggregatedblogs/aggregatedblogs'));
+// const HomePage = lazy(() => import('../homepage/homepage'));
 
-const HomePage = lazy(async () => (await import('../homepage/homepage')));
-
-
+const UserIntro = lazy(() => import('../homepage/about'));
+const EditUser = lazy(() => import('../edituser/edituser'));
+const BlogList = lazy(() => import('../bloglist/bloglist'));
+const CreateNewBlogPage = lazy(() => import('../createblogpage/createblogpage'));
+const EditBlog = lazy(() => import('../editblog/editblog'));
 
 const PageName = {
     USERINTRO: 'USERINTRO',

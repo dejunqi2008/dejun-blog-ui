@@ -7,7 +7,7 @@ import { baseAPIUrl } from '../utils/commUtils';
 import { MemoListPannel } from "../bloglist/list-panel";
 import { Alert } from '@mui/material';
 
-export const AggregatedBlogs = () => {
+const AggregatedBlogs = () => {
 
     const { username, tagname } = useParams();
     const [blogPosts, setBlogPosts] = useState([]);
@@ -65,3 +65,4 @@ export const AggregatedBlogs = () => {
     )
 }
 
+export default AggregatedBlogs;
